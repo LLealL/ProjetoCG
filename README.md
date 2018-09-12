@@ -11,8 +11,8 @@ Projeto para a cadeira de Computação Gráfica na UNICAP.
 
 # Grupo
 
-- Julia
-- Leoni
+- Julia Nunes
+- Leoni Kurt
 - Lucas Leal
 
 # Descrição do Projeto
