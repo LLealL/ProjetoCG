@@ -13,15 +13,43 @@ import javax.media.opengl.GL;
  * @author keyalisth
  */
 public abstract class Figura {
-    private long id;
+    private final Integer id;
+    private int x;
+    private int y;
+    private int escalaX;
+    private int escalaY;
+    private RGB cor;
     
-    protected Figura(long id){
+    protected Figura(Integer id,int x,int y,RGB cor){
         this.id=id;
     }
     
     public abstract void desenhar(GL gl);
-    public abstract void mudaCor(RGB cor);
-    public abstract void realizarEscala(int sx ,int sy);
-    public abstract void transform(int tx , int ty);
+    public void mudaCor(RGB cor){
+        this.cor=cor;
+    }
+    public void realizarEscala(int sx ,int sy){
+        escalaX=sx;
+        escalaY=sy;
+    }
+    public void transform(int tx , int ty){
+        this.x=this.x+tx;
+        this.y=this.y+ty;
+    }
+    
+    protected RGB getCor(){
+        return this.cor;
+    }
+    
+    protected int getX(){
+        return x;
+    }
+    
+    protected int getY(){
+        return y;
+    }
+    public Integer getID(){
+        return id;
+    }
 }
 
