@@ -1,4 +1,4 @@
-package cg.paint;
+package org.yourorghere;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
@@ -56,8 +56,7 @@ public class GLRenderer implements GLEventListener {
 
         // Move the "drawing cursor" around
         gl.glTranslatef(-1.5f, 0.0f, -6.0f);
-
-        // Drawing Using Triangles
+          // Drawing Using Triangles
         gl.glBegin(GL.GL_TRIANGLES);
             gl.glColor3f(1.0f, 0.0f, 0.0f);    // Set the current drawing color to red
             gl.glVertex3f(0.0f, 1.0f, 0.0f);   // Top
