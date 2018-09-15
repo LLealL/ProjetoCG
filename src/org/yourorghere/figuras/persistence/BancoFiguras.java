@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.media.opengl.GL;
 import org.yourorghere.figuras.Figura;
 
 /**
@@ -51,5 +52,11 @@ public class BancoFiguras{
             list.add(fig);
         }
         return list;
+    }
+    
+    public void drawFigures(GL gl){
+        for(Figura fig: set){
+            fig.desenhar(gl);
+        }
     }
 }

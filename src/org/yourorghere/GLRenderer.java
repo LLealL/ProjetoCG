@@ -6,7 +6,10 @@ import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 import org.yourorghere.figuras.Figura;
 import org.yourorghere.figuras.Poligono;
+import org.yourorghere.figuras.Quadrilatero;
+import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.RGB;
+import org.yourorghere.figuras.persistence.BancoFiguras;
 
 
 /**
@@ -17,7 +20,7 @@ import org.yourorghere.figuras.Util.RGB;
  */
 public class GLRenderer implements GLEventListener {
 
-    private static Figura fig;
+    private BancoFiguras figuras;
     
     public void init(GLAutoDrawable drawable) {
         // Use debug pipeline
@@ -29,7 +32,10 @@ public class GLRenderer implements GLEventListener {
         // Enable VSync
         gl.setSwapInterval(1);
 
-        fig = new Poligono(10,0,0,new RGB(255,0,0), 1);
+        figuras= BancoFiguras.getInstance();
+        figuras.addFigura(new Triangulo(1,3,4,new RGB(255,0,0)));
+        figuras.addFigura(new Quadrilatero(2,4,5, new RGB(0,255,0)));
+        
         // Setup the drawing area and shading mode
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
@@ -61,7 +67,7 @@ public class GLRenderer implements GLEventListener {
         // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
         
-       fig.desenhar(gl);
+        figuras.drawFigures(gl);
         // Flush all drawing operations to the graphics card
         gl.glFlush();
     }

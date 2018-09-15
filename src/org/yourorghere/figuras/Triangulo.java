@@ -21,6 +21,7 @@ public class Triangulo extends Figura{
 
     @Override
     public void desenhar(GL gl) {
+        gl.glTranslatef(-1.5f, -2.0f, -3.0f);
         gl.glBegin(0);
             gl.glColor3i(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
             gl.glVertex2f(super.getX()-3,super.getY()-2);

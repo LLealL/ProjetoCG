@@ -21,6 +21,7 @@ public class Quadrilatero extends Figura {
 
     @Override
     public void desenhar(GL gl) {
+        gl.glTranslatef(-1.5f, -2.0f, -3.0f);
         gl.glBegin(GL_QUADS);
             gl.glColor3i(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
             gl.glVertex2f(super.getX()-2,super.getY()+2);
