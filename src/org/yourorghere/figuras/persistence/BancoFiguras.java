@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import javax.media.opengl.GL;
 import org.yourorghere.figuras.Figura;
 
@@ -18,11 +19,11 @@ import org.yourorghere.figuras.Figura;
  * @author keyalisth
  */
 public class BancoFiguras{
-    private HashSet<Figura> set;
+    private TreeSet<Figura> set;
     private static BancoFiguras instance;
     
     private BancoFiguras(){
-        set=new HashSet<Figura>();
+        set=new TreeSet<Figura>();
     }
     
     public static BancoFiguras getInstance(){

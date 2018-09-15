@@ -12,7 +12,7 @@ import javax.media.opengl.GL;
  *
  * @author keyalisth
  */
-public abstract class Figura {
+public abstract class Figura implements Comparable<Figura>{
     private final Integer id;
     private int x;
     private int y;
@@ -51,5 +51,10 @@ public abstract class Figura {
     public Integer getID(){
         return id;
     }
+    
+    public int compareTo(Figura f) {
+       return this.getID().compareTo(f.getID());
+    }
+     
 }
 
