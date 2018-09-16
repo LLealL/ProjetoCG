@@ -19,7 +19,7 @@ public class Poligono extends Figura {
     private int lados;
 
     
-    public Poligono(int n,int x, int y,RGB cor,Integer id){
+    public Poligono(Integer id,int x, int y,RGB cor,int n){
         super(id,x,y,cor);
         lados=n;
     }

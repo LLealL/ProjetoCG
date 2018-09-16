@@ -30,6 +30,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import org.yourorghere.figuras.Poligono;
+import org.yourorghere.figuras.Quadrilatero;
 import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
@@ -414,6 +416,7 @@ public class Paint extends JFrame {
             int g = Integer.parseInt(text2);
             int b = Integer.parseInt(text3);
         }
+        canvas.display();
     }//GEN-LAST:event_BotaoTrianguloActionPerformed
 
     private void BotaoQuadradoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoQuadradoActionPerformed
@@ -422,13 +425,15 @@ public class Paint extends JFrame {
         String text3 = B.getText();
       
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            
+            figuras= BancoFiguras.getInstance();
+            figuras.addFigura(new Quadrilatero(1,3,4,new RGB(1.0f,0.0f,0.0f)));
         }else
         {
             int r = Integer.parseInt(text1);
             int g = Integer.parseInt(text2);
             int b = Integer.parseInt(text3);
         }
+        canvas.display();
     }//GEN-LAST:event_BotaoQuadradoActionPerformed
 
     private void BotaoPoligonoActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoPoligonoActionPerformed
@@ -437,13 +442,16 @@ public class Paint extends JFrame {
         String text3 = B.getText();
         
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            
+            figuras= BancoFiguras.getInstance();
+            figuras.addFigura(new Poligono(1,3,4,new RGB(1.0f,0.0f,0.0f),7));
+            //poligono 7 lados
         }else
         {
             int r = Integer.parseInt(text1);
             int g = Integer.parseInt(text2);
             int b = Integer.parseInt(text3);
         }
+        canvas.display();
     }//GEN-LAST:event_BotaoPoligonoActionPerformed
 
     /**
