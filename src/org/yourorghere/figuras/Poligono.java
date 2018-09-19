@@ -28,7 +28,7 @@ public class Poligono extends Figura {
     @Override
     public void desenhar(GL gl){
         double angulo;
-        gl.glTranslatef(-1.5f, -2.0f, -3.0f);
+        gl.glTranslatef(0.0f, 0.0f, -20.0f);
         gl.glBegin(GL.GL_POLYGON);
         gl.glColor3f(super.getCor().getRed(), super.getCor().getGreen(), super.getCor().getBlue());
         for(int i=0;i<lados;++i){
