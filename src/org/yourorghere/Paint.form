@@ -63,7 +63,11 @@
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
               </Group>
+<<<<<<< HEAD
               <EmptySpace pref="68" max="32767" attributes="0"/>
+=======
+              <EmptySpace max="32767" attributes="0"/>
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
           </Group>
       </Group>
     </DimensionLayout>
@@ -457,9 +461,12 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Press"/>
           </Properties>
+<<<<<<< HEAD
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoExcAllActionPerformed"/>
           </Events>
+=======
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         </Component>
       </SubComponents>
     </Container>

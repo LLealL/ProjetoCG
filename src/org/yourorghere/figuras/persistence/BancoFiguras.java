@@ -23,7 +23,11 @@ public class BancoFiguras{
     private TreeSet<Figura> set;
     private static BancoFiguras instance;
     
+<<<<<<< HEAD
     public BancoFiguras(){
+=======
+    private BancoFiguras(){
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         set=new TreeSet<Figura>();
     }
     
@@ -62,10 +66,13 @@ public class BancoFiguras{
             fig.desenhar(gl);
         }
     }
+<<<<<<< HEAD
     
     public void clearFigures(){
         for(Figura fig: set){
             removeFigura(fig);
         }
     }
+=======
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
 }

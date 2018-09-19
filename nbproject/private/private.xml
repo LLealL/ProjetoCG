@@ -4,10 +4,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/leoni/Downloads/ProjetoCG-premaster2/src/org/yourorghere/GLRenderer.java</file>
             <file>file:/C:/Users/leoni/Downloads/ProjetoCG-premaster2/src/org/yourorghere/figuras/Figura.java</file>
             <file>file:/C:/Users/leoni/Downloads/ProjetoCG-premaster2/src/org/yourorghere/Paint.java</file>
             <file>file:/C:/Users/leoni/Downloads/ProjetoCG-premaster2/src/org/yourorghere/figuras/persistence/BancoFiguras.java</file>
+=======
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/figuras/persistence/BancoFiguras.java</file>
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/figuras/Figura.java</file>
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/figuras/Poligono.java</file>
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/Paint.java</file>
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/figuras/Triangulo.java</file>
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/GLRenderer.java</file>
+            <file>file:/home/keyalisth/Desktop/Repositorios/ProjetoCG/src/org/yourorghere/figuras/Quadrilatero.java</file>
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         </group>
     </open-files>
 </project-private>

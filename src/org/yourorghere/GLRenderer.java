@@ -64,7 +64,11 @@ public class GLRenderer implements GLEventListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         figuras.drawFigures(gl);
         // Flush all drawing operations to the graphics card
         gl.glFlush();

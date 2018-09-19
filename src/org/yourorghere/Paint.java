@@ -62,7 +62,11 @@ public class Paint extends JFrame {
         animator = new Animator(canvas);
 
         // This is a workaround for the GLCanvas not adjusting its size, when the frame is resized.
+<<<<<<< HEAD
         canvas.setMinimumSize(new Dimension()); 
+=======
+        canvas.setMinimumSize(new Dimension());         
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         
         this.addWindowListener(new WindowAdapter() {
 
@@ -324,11 +328,14 @@ public class Paint extends JFrame {
         ExcAll.setText("Excluir todos:");
 
         BotaoExcAll.setText("Press");
+<<<<<<< HEAD
         BotaoExcAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 BotaoExcAllActionPerformed(evt);
             }
         });
+=======
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
 
         GroupLayout jPanel5Layout = new GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -393,7 +400,11 @@ public class Paint extends JFrame {
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+<<<<<<< HEAD
                 .addContainerGap(68, Short.MAX_VALUE))
+=======
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         );
 
         pack();
@@ -417,11 +428,17 @@ public class Paint extends JFrame {
 
         }else
         {
+<<<<<<< HEAD
             float r = Float.parseFloat(text1);
             float g = Float.parseFloat(text2);
             float b = Float.parseFloat(text3);
             figuras= BancoFiguras.getInstance();
             figuras.addFigura(new Triangulo(1,3,4,new RGB(r,g,b)));
+=======
+            int r = Integer.parseInt(text1);
+            int g = Integer.parseInt(text2);
+            int b = Integer.parseInt(text3);
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         }
         canvas.display();
     }//GEN-LAST:event_BotaoTrianguloActionPerformed
@@ -433,6 +450,7 @@ public class Paint extends JFrame {
       
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
             figuras= BancoFiguras.getInstance();
+<<<<<<< HEAD
             figuras.addFigura(new Quadrilatero(1,3,3,new RGB(1.0f,0.0f,0.0f)));
         }else
         {
@@ -441,6 +459,14 @@ public class Paint extends JFrame {
             float b = Float.parseFloat(text3);
             figuras= BancoFiguras.getInstance();
             figuras.addFigura(new Quadrilatero(1,3,3,new RGB(r,g,b)));
+=======
+            figuras.addFigura(new Quadrilatero(1,3,4,new RGB(1.0f,0.0f,0.0f)));
+        }else
+        {
+            int r = Integer.parseInt(text1);
+            int g = Integer.parseInt(text2);
+            int b = Integer.parseInt(text3);
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         }
         canvas.display();
     }//GEN-LAST:event_BotaoQuadradoActionPerformed
@@ -449,6 +475,7 @@ public class Paint extends JFrame {
         String text1 = R.getText();
         String text2 = G.getText();
         String text3 = B.getText();
+<<<<<<< HEAD
         String text4 = Lados.getText();
         
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
@@ -475,16 +502,31 @@ public class Paint extends JFrame {
                 figuras = BancoFiguras.getInstance();
                 figuras.addFigura(new Poligono(1,3,4,new RGB(r,g,b), lados));
             }
+=======
+        
+        if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
+            figuras= BancoFiguras.getInstance();
+            figuras.addFigura(new Poligono(1,3,4,new RGB(1.0f,0.0f,0.0f),7));
+            //poligono 7 lados
+        }else
+        {
+            int r = Integer.parseInt(text1);
+            int g = Integer.parseInt(text2);
+            int b = Integer.parseInt(text3);
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
         }
         canvas.display();
     }//GEN-LAST:event_BotaoPoligonoActionPerformed
 
+<<<<<<< HEAD
     private void BotaoExcAllActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoExcAllActionPerformed
         figuras= BancoFiguras.getInstance();
         figuras.clearFigures();
         canvas.display();
     }//GEN-LAST:event_BotaoExcAllActionPerformed
 
+=======
+>>>>>>> d0dfdee0523bd9d2c0b4552cced38f70b27e052f
     /**
      * Called from within initComponents().
      * hint: to customize the generated code choose 'Customize Code' in the contextmenu
