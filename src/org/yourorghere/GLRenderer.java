@@ -22,6 +22,10 @@ public class GLRenderer implements GLEventListener {
 
     private BancoFiguras figuras;
     
+    public void Limpar(){
+        figuras = null;
+    }
+    
     public void init(GLAutoDrawable drawable) {
         // Use debug pipeline
         // drawable.setGL(new DebugGL(drawable.getGL()));
@@ -49,6 +53,7 @@ public class GLRenderer implements GLEventListener {
         }
         final float h = (float) width / (float) height;
         gl.glViewport(0, 0, width, height);
+        
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45.0f, h, 1.0, 20.0);
@@ -57,20 +62,27 @@ public class GLRenderer implements GLEventListener {
     }
 
     public void display(GLAutoDrawable drawable) {
-        float angulo;
-        GL gl = drawable.getGL();
 
+        GL gl = drawable.getGL();
+        
+        figuras = BancoFiguras.getInstance();
+        
         // Clear the drawing area
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
-        
+        gl.glTranslatef(0.0f,0.0f,0.0f);
         figuras.drawFigures(gl);
+
         // Flush all drawing operations to the graphics card
         gl.glFlush();
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
+    }
+    
+    public void clear(){
+        figuras=null;
     }
 }
 

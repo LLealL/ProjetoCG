@@ -13,6 +13,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
@@ -27,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -43,7 +46,8 @@ import org.yourorghere.figuras.persistence.BancoFiguras;
  */
 public class Paint extends JFrame {
     private BancoFiguras figuras;
-   
+    private static int i = 1;
+    GLRenderer renderer;
         
     static {
         // When using a GLCanvas, we have to set the Popup-Menues to be HeavyWeight,
@@ -57,12 +61,13 @@ public class Paint extends JFrame {
     public Paint() {
         initComponents();
         setTitle("Projeto CG");
-
-        canvas.addGLEventListener(new GLRenderer());
+        
+        renderer= new GLRenderer();
+        canvas.addGLEventListener(renderer);
         animator = new Animator(canvas);
 
         // This is a workaround for the GLCanvas not adjusting its size, when the frame is resized.
-        canvas.setMinimumSize(new Dimension());         
+        canvas.setMinimumSize(new Dimension()); 
         
         this.addWindowListener(new WindowAdapter() {
 
@@ -124,8 +129,19 @@ public class Paint extends JFrame {
         BotaoExcUm = new JButton();
         ExcAll = new JLabel();
         BotaoExcAll = new JButton();
+        jPanel6 = new JPanel();
+        jPanel7 = new JPanel();
+        jToggleButton1 = new JToggleButton();
+        jLabel1 = new JLabel();
+        jTextField1 = new JTextField();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        canvas.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                canvasMouseClicked(evt);
+            }
+        });
 
         jPanel1.setBackground(new Color(204, 204, 255));
 
@@ -186,10 +202,10 @@ public class Paint extends JFrame {
             .addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+                    .addComponent(BotaoPoligono, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Poligono))
-                    .addComponent(BotaoPoligono, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(Poligono)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
@@ -221,13 +237,12 @@ public class Paint extends JFrame {
         jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(Quadrado)
-                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(BotaoQuadrado, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(15, 15, 15))))
+                .addComponent(BotaoQuadrado, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
+            .addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Quadrado)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -277,24 +292,21 @@ public class Paint extends JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(Cores)
+                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(Alignment.TRAILING, false)
                             .addComponent(R)
                             .addComponent(Vermelho, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel4Layout.createParallelGroup(Alignment.TRAILING)
+                            .addComponent(Verde)
+                            .addComponent(G, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(Verde))
-                            .addGroup(Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(G, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
-                            .addComponent(Azul)
-                            .addComponent(B, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 10, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(Cores)
-                        .addContainerGap())))
+                            .addComponent(Azul, Alignment.TRAILING)
+                            .addComponent(B, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26))))
         );
         jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -324,16 +336,22 @@ public class Paint extends JFrame {
         ExcAll.setText("Excluir todos:");
 
         BotaoExcAll.setText("Press");
+        BotaoExcAll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                BotaoExcAllActionPerformed(evt);
+            }
+        });
 
         GroupLayout jPanel5Layout = new GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(ExcUm, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addContainerGap()
+                        .addComponent(ExcUm, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addComponent(BotaoExcUm)))
                 .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(Alignment.LEADING)
@@ -347,11 +365,64 @@ public class Paint extends JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(Alignment.BASELINE)
                     .addComponent(ExcUm)
                     .addComponent(ExcAll))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(Alignment.BASELINE)
-                    .addComponent(BotaoExcUm)
-                    .addComponent(BotaoExcAll, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(BotaoExcUm))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(BotaoExcAll)))
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new Color(204, 204, 255));
+
+        GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+            .addGap(0, 105, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel7.setBackground(new Color(204, 204, 255));
+
+        jToggleButton1.setText("On/Off");
+
+        jLabel1.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        jLabel1.setText("Malha:");
+
+        jTextField1.setText("Tamanho");
+
+        GroupLayout jPanel7Layout = new GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jToggleButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(9, 14, Short.MAX_VALUE)
+                                .addComponent(jLabel1)))
+                        .addGap(23, 23, 23))))
+        );
+        jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(jToggleButton1)
+                .addContainerGap())
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -361,34 +432,43 @@ public class Paint extends JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79)
-                        .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(195, 195, 195)
+                        .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                        .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+                                .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                            .addGap(55, 55, 55)
+                            .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(66, 66, 66)
+                                    .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
+                .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                    .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                    .addComponent(jPanel3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                    .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -407,14 +487,14 @@ public class Paint extends JFrame {
         String text2 = G.getText();
         String text3 = B.getText();
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Triangulo(1,3,4,new RGB(1.0f,0.0f,0.0f)));
-
+            System.out.println("escolha uma cor!");
         }else
         {
-            int r = Integer.parseInt(text1);
-            int g = Integer.parseInt(text2);
-            int b = Integer.parseInt(text3);
+            float r = Float.parseFloat(text1);
+            float g = Float.parseFloat(text2);
+            float b = Float.parseFloat(text3);
+            figuras= BancoFiguras.getInstance();
+            figuras.addFigura(new Triangulo(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
         }
         canvas.display();
     }//GEN-LAST:event_BotaoTrianguloActionPerformed
@@ -424,14 +504,15 @@ public class Paint extends JFrame {
         String text2 = G.getText();
         String text3 = B.getText();
       
-        if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Quadrilatero(1,3,4,new RGB(1.0f,0.0f,0.0f)));
+        if ("R".equals(text1) || "G".equals(text2) || "B".equals(text3)) {
+            System.out.println("escolha uma cor!");
         }else
         {
-            int r = Integer.parseInt(text1);
-            int g = Integer.parseInt(text2);
-            int b = Integer.parseInt(text3);
+            float r = Float.parseFloat(text1);
+            float g = Float.parseFloat(text2);
+            float b = Float.parseFloat(text3);
+            figuras= BancoFiguras.getInstance();
+            figuras.addFigura(new Quadrilatero(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
         }
         canvas.display();
     }//GEN-LAST:event_BotaoQuadradoActionPerformed
@@ -440,19 +521,40 @@ public class Paint extends JFrame {
         String text1 = R.getText();
         String text2 = G.getText();
         String text3 = B.getText();
+        String text4 = Lados.getText();
         
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Poligono(1,3,4,new RGB(1.0f,0.0f,0.0f),7));
-            //poligono 7 lados
+            System.out.println("escolha uma cor!");
         }else
         {
-            int r = Integer.parseInt(text1);
-            int g = Integer.parseInt(text2);
-            int b = Integer.parseInt(text3);
+            float r = Float.parseFloat(text1);
+            float g = Float.parseFloat(text2);
+            float b = Float.parseFloat(text3);
+            if ("Lados".equals(text4)) {
+                figuras= BancoFiguras.getInstance();
+                figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b),7));
+                //poligono 7 lados
+            }else{
+                int lados = Integer.parseInt(text4);
+                figuras = BancoFiguras.getInstance();
+                figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b), lados));
+            }
         }
         canvas.display();
     }//GEN-LAST:event_BotaoPoligonoActionPerformed
+
+    private void BotaoExcAllActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoExcAllActionPerformed
+        figuras= BancoFiguras.getInstance();
+        figuras.clearFigures();
+        renderer.clear();
+        figuras=null;
+        canvas.display();
+    }//GEN-LAST:event_BotaoExcAllActionPerformed
+
+    private void canvasMouseClicked(MouseEvent evt) {//GEN-FIRST:event_canvasMouseClicked
+        System.out.println("clicou");
+        System.out.println(evt.getPoint());
+    }//GEN-LAST:event_canvasMouseClicked
 
     /**
      * Called from within initComponents().
@@ -488,6 +590,7 @@ public class Paint extends JFrame {
                 }
 
                 Paint frame = new Paint();
+                
                 frame.setVisible(true);
             }
         });
@@ -513,11 +616,16 @@ public class Paint extends JFrame {
     private JLabel Verde;
     private JLabel Vermelho;
     private GLCanvas canvas;
+    private JLabel jLabel1;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JPanel jPanel4;
     private JPanel jPanel5;
+    private JPanel jPanel6;
+    private JPanel jPanel7;
+    private JTextField jTextField1;
+    private JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
 }

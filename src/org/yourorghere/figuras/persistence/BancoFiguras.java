@@ -23,7 +23,7 @@ public class BancoFiguras{
     private TreeSet<Figura> set;
     private static BancoFiguras instance;
     
-    private BancoFiguras(){
+    public BancoFiguras(){
         set=new TreeSet<Figura>();
     }
     
@@ -41,6 +41,7 @@ public class BancoFiguras{
     public void removeFigura(Figura f){
         set.remove(f);
     }
+    
     public Figura getFigura(Integer id){
         for(Figura fig: set){
             if(fig.getID()==id){
@@ -61,5 +62,13 @@ public class BancoFiguras{
         for(Figura fig: set){
             fig.desenhar(gl);
         }
+    }
+    
+    public void clearFigures(){
+        instance = null;
+    }
+    
+    public Integer getNewID(){
+        return set.size();
     }
 }
