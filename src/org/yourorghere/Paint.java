@@ -47,6 +47,7 @@ import org.yourorghere.figuras.persistence.BancoFiguras;
 public class Paint extends JFrame {
     private BancoFiguras figuras;
     private static int i = 1;
+    GLRenderer renderer;
         
     static {
         // When using a GLCanvas, we have to set the Popup-Menues to be HeavyWeight,
@@ -60,8 +61,9 @@ public class Paint extends JFrame {
     public Paint() {
         initComponents();
         setTitle("Projeto CG");
-
-        canvas.addGLEventListener(new GLRenderer());
+        
+        renderer= new GLRenderer();
+        canvas.addGLEventListener(renderer);
         animator = new Animator(canvas);
 
         // This is a workaround for the GLCanvas not adjusting its size, when the frame is resized.
@@ -485,17 +487,14 @@ public class Paint extends JFrame {
         String text2 = G.getText();
         String text3 = B.getText();
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Triangulo(i,3,4,new RGB(1.0f,0.0f,0.0f)));
-            i++;
+            System.out.println("escolha uma cor!");
         }else
         {
             float r = Float.parseFloat(text1);
             float g = Float.parseFloat(text2);
             float b = Float.parseFloat(text3);
             figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Triangulo(i,3,4,new RGB(r,g,b)));
-            i++;
+            figuras.addFigura(new Triangulo(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
         }
         canvas.display();
     }//GEN-LAST:event_BotaoTrianguloActionPerformed
@@ -505,18 +504,15 @@ public class Paint extends JFrame {
         String text2 = G.getText();
         String text3 = B.getText();
       
-        if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Quadrilatero(i,3,3,new RGB(1.0f,0.0f,0.0f)));
-            i++;
+        if ("R".equals(text1) || "G".equals(text2) || "B".equals(text3)) {
+            System.out.println("escolha uma cor!");
         }else
         {
             float r = Float.parseFloat(text1);
             float g = Float.parseFloat(text2);
             float b = Float.parseFloat(text3);
             figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Quadrilatero(i,3,4,new RGB(r,g,b)));
-            i++;
+            figuras.addFigura(new Quadrilatero(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
         }
         canvas.display();
     }//GEN-LAST:event_BotaoQuadradoActionPerformed
@@ -528,15 +524,7 @@ public class Paint extends JFrame {
         String text4 = Lados.getText();
         
         if ("R".equals(text1) && "G".equals(text2) && "B".equals(text3)) {
-            if ("Lados".equals(text4)) {
-                figuras= BancoFiguras.getInstance();
-                figuras.addFigura(new Poligono(1,3,4,new RGB(1.0f,0.0f,0.0f),7));
-                //poligono 7 lados
-            }else{
-                int lados = Integer.parseInt(text4);
-                figuras = BancoFiguras.getInstance();
-                figuras.addFigura(new Poligono(1,3,4,new RGB(1.0f,0.0f,0.0f), lados));
-            }
+            System.out.println("escolha uma cor!");
         }else
         {
             float r = Float.parseFloat(text1);
@@ -544,12 +532,12 @@ public class Paint extends JFrame {
             float b = Float.parseFloat(text3);
             if ("Lados".equals(text4)) {
                 figuras= BancoFiguras.getInstance();
-                figuras.addFigura(new Poligono(1,3,4,new RGB(r,g,b),7));
+                figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b),7));
                 //poligono 7 lados
             }else{
                 int lados = Integer.parseInt(text4);
                 figuras = BancoFiguras.getInstance();
-                figuras.addFigura(new Poligono(1,3,4,new RGB(r,g,b), lados));
+                figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b), lados));
             }
         }
         canvas.display();
@@ -558,6 +546,7 @@ public class Paint extends JFrame {
     private void BotaoExcAllActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoExcAllActionPerformed
         figuras= BancoFiguras.getInstance();
         figuras.clearFigures();
+        renderer.clear();
         figuras=null;
         canvas.display();
     }//GEN-LAST:event_BotaoExcAllActionPerformed

@@ -41,6 +41,7 @@ public class BancoFiguras{
     public void removeFigura(Figura f){
         set.remove(f);
     }
+    
     public Figura getFigura(Integer id){
         for(Figura fig: set){
             if(fig.getID()==id){
@@ -65,5 +66,9 @@ public class BancoFiguras{
     
     public void clearFigures(){
         instance = null;
+    }
+    
+    public Integer getNewID(){
+        return set.size();
     }
 }

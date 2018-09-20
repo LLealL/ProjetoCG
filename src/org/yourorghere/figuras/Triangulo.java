@@ -23,12 +23,12 @@ public class Triangulo extends Figura{
 
     @Override
     public void desenhar(GL gl) {
-        gl.glTranslatef(0.0f, 0.0f, -7.0f);
+        gl.glTranslatef(0.0f, 0.0f, -1.0f);
         gl.glBegin(GL_TRIANGLES);
             gl.glColor3f(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
-            gl.glVertex2f(super.getX(), (float) (super.getY() + sqrt(3)/2));
-            gl.glVertex2f(super.getX() +1, (float) (super.getY() - sqrt(3.0f)/2.0f));
-            gl.glVertex2f(super.getX()-1, (float) (super.getY() - sqrt(3.0f)/2.0f));
+            gl.glVertex2f(super.getX(), (float) (super.getY() + sqrt(3.0f)/1.0f));
+            gl.glVertex2f(super.getX() +2.0f, (float) (super.getY() - sqrt(3.0f)/1.0f));
+            gl.glVertex2f(super.getX()-2.0f, (float) (super.getY() - sqrt(3.0f)/1.0f));
         gl.glEnd();
     }
 
