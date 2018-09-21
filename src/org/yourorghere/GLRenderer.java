@@ -1,5 +1,7 @@
 package org.yourorghere;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -12,14 +14,11 @@ import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
 
-/**
- * GLRenderer.java <BR>
- * author: Brian Paul (converted to Java by Ron Cemer and Sven Goethel) <P>
- *
- * This version is equal to Brian Paul's version 1.2 1999/10/21
- */
-public class GLRenderer implements GLEventListener {
+public class GLRenderer implements GLEventListener{
 
+    
+    private static boolean gridActivated=false;
+    private static float tamanhoGrid=0.1f;
     private BancoFiguras figuras;
     
     public void Limpar(){
@@ -73,7 +72,9 @@ public class GLRenderer implements GLEventListener {
         gl.glLoadIdentity();
         gl.glTranslatef(0.0f,0.0f,0.0f);
         figuras.drawFigures(gl);
-
+        if(gridActivated){
+            drawGrid(gl,tamanhoGrid);
+        }
         // Flush all drawing operations to the graphics card
         gl.glFlush();
     }
@@ -83,6 +84,30 @@ public class GLRenderer implements GLEventListener {
     
     public void clear(){
         figuras=null;
+    }    
+    
+    public static void OpenGrid(float tamanho){
+        gridActivated = true;
+        tamanhoGrid=tamanho;
+    }
+    
+    public void drawGrid(GL gl, float tamanho){
+        
+        gl.glBegin(gl.GL_LINES);
+        gl.glColor3f(1.0f,1.0f,1.0f); 
+        for(float x = 0.0f; x < 500.0f; x += tamanho )
+        {
+            gl.glVertex3f(x-250.0f, -200.0f, 0.0f);
+            gl.glVertex3f(x-250.0f, 200.0f, 0.0f);
+        }
+        for(float y = 0; y < 400.0f; y += tamanho )
+        {
+            gl.glVertex3f(-250.0f, y-200.0f, 0.0f);
+            gl.glVertex3f(250.0f, y-200.0f, 0.0f);
+        }
+        gl.glEnd();
+        
+    
     }
 }
 

@@ -6,6 +6,7 @@
 
 package org.yourorghere;
 
+import com.jogamp.opengl.util.FPSAnimator;
 import com.sun.opengl.util.Animator;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,11 +40,7 @@ import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
-/**
- *
- * @author cylab
- * @author mbien
- */
+
 public class Paint extends JFrame {
     private BancoFiguras figuras;
     private static int i = 1;
@@ -68,7 +65,6 @@ public class Paint extends JFrame {
 
         // This is a workaround for the GLCanvas not adjusting its size, when the frame is resized.
         canvas.setMinimumSize(new Dimension()); 
-        
         this.addWindowListener(new WindowAdapter() {
 
             @Override
@@ -490,9 +486,9 @@ public class Paint extends JFrame {
             System.out.println("escolha uma cor!");
         }else
         {
-            float r = Float.parseFloat(text1);
-            float g = Float.parseFloat(text2);
-            float b = Float.parseFloat(text3);
+            float r = Float.parseFloat(text1)/255.0f;
+            float g = Float.parseFloat(text2)/255.0f;
+            float b = Float.parseFloat(text3)/255.0f;
             figuras= BancoFiguras.getInstance();
             figuras.addFigura(new Triangulo(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
         }
@@ -508,9 +504,9 @@ public class Paint extends JFrame {
             System.out.println("escolha uma cor!");
         }else
         {
-            float r = Float.parseFloat(text1);
-            float g = Float.parseFloat(text2);
-            float b = Float.parseFloat(text3);
+            float r = Float.parseFloat(text1)/255.0f;
+            float g = Float.parseFloat(text2)/255.0f;
+            float b = Float.parseFloat(text3)/255.0f;
             figuras= BancoFiguras.getInstance();
             figuras.addFigura(new Quadrilatero(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
         }
@@ -527,9 +523,9 @@ public class Paint extends JFrame {
             System.out.println("escolha uma cor!");
         }else
         {
-            float r = Float.parseFloat(text1);
-            float g = Float.parseFloat(text2);
-            float b = Float.parseFloat(text3);
+            float r = Float.parseFloat(text1)/255.0f;
+            float g = Float.parseFloat(text2)/255.0f;
+            float b = Float.parseFloat(text3)/255.0f;
             if ("Lados".equals(text4)) {
                 figuras= BancoFiguras.getInstance();
                 figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b),7));
