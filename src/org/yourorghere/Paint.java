@@ -6,6 +6,7 @@
 
 package org.yourorghere;
 
+import com.jogamp.opengl.util.FPSAnimator;
 import com.sun.opengl.util.Animator;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,11 +40,7 @@ import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
-/**
- *
- * @author cylab
- * @author mbien
- */
+
 public class Paint extends JFrame {
     private BancoFiguras figuras;
     private static int i = 1;
@@ -68,7 +65,6 @@ public class Paint extends JFrame {
 
         // This is a workaround for the GLCanvas not adjusting its size, when the frame is resized.
         canvas.setMinimumSize(new Dimension()); 
-        
         this.addWindowListener(new WindowAdapter() {
 
             @Override
