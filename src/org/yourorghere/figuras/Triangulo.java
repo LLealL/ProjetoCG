@@ -28,9 +28,9 @@ public class Triangulo extends Figura{
         gl.glTranslatef(0.0f, 0.0f, 0.0f);
         gl.glBegin(GL_TRIANGLES);
             gl.glColor3f(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
-            gl.glVertex2f(super.getX(), (float) (super.getY() + sin(60.0)/2.0f));
-            gl.glVertex2f((super.getX()+ (float)cos(60.0)), (float) (super.getY() - sin(60.0)/2.0f));
-            gl.glVertex2f(super.getX()-(float)cos(60.0), (float) (super.getY() - sin(60)/2.0f));
+            gl.glVertex2f(super.getX(), (float) (super.getY() + sqrt(3.0)/4.0f));
+            gl.glVertex2f((super.getX()+ 0.5f), (float) (super.getY() - sqrt(3.0)/4.0f));
+            gl.glVertex2f(super.getX()-0.5f, (float) (super.getY() - sqrt(3.0)/4.0f));
         gl.glEnd();
     }
 
