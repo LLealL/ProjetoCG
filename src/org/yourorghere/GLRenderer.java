@@ -88,6 +88,10 @@ public class GLRenderer implements GLEventListener{
         tamanhoGrid=tamanho;
     }
     
+    public static void CloseGrid(){
+        gridActivated = false;
+    }
+    
     public void drawGrid(GL gl, float tamanho){
         
         gl.glBegin(gl.GL_LINES);
@@ -103,8 +107,5 @@ public class GLRenderer implements GLEventListener{
             gl.glVertex3f(250.0f, y-200.0f, 0.0f);
         }
         gl.glEnd();
-        
-    
     }
 }
-

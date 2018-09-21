@@ -37,8 +37,4 @@ public class Poligono extends Figura {
         }
         gl.glEnd();
     }
-
-
-
 }
-
