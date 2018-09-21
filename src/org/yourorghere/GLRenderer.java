@@ -17,13 +17,10 @@ import org.yourorghere.figuras.persistence.BancoFiguras;
 public class GLRenderer implements GLEventListener{
 
     
-    private static boolean gridActivated=false;
-    private static float tamanhoGrid=0.1f;
+    private static boolean gridActivated=true;
+    private static float tamanhoGrid=0.1f; 
     private BancoFiguras figuras;
     
-    public void Limpar(){
-        figuras = null;
-    }
     
     public void init(GLAutoDrawable drawable) {
         // Use debug pipeline
@@ -50,12 +47,12 @@ public class GLRenderer implements GLEventListener{
         
             height = 1;
         }
-        final float h = (float) width / (float) height;
-        gl.glViewport(0, 0, width, height);
-        
+        final float h =  550.0f /  400.0f;
+        gl.glViewport(0, 0, 550, 400);
+
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(45.0f, h, 1.0, 20.0);
+        glu.gluPerspective(0.0f, h, 0.0, 20.0);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
