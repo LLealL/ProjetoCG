@@ -526,6 +526,7 @@ public class Paint extends JFrame {
             float r = Float.parseFloat(text1)/255.0f;
             float g = Float.parseFloat(text2)/255.0f;
             float b = Float.parseFloat(text3)/255.0f;
+        //    System.out.println(r+" "+g+" "+b);
             if ("Lados".equals(text4)) {
                 figuras= BancoFiguras.getInstance();
                 figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b),7));
