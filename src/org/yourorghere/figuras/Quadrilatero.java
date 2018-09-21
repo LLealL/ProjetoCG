@@ -22,13 +22,13 @@ public class Quadrilatero extends Figura {
 
     @Override
     public void desenhar(GL gl) {
-        gl.glTranslatef(0.0f, 0.0f, -1.0f);
+        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         gl.glBegin(GL_QUADS);
             gl.glColor3f(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
-            gl.glVertex2f(super.getX()-1.0f,super.getY()+1.0f);
-            gl.glVertex2f(super.getX()+1.0f,super.getY()+1.0f);
-            gl.glVertex2f(super.getX()+1.0f,super.getY()-1.0f);
-            gl.glVertex2f(super.getX()-1.0f,super.getY()-1.0f);
+            gl.glVertex2f(super.getX()-0.5f,super.getY()+0.5f);
+            gl.glVertex2f(super.getX()+0.5f,super.getY()+0.5f);
+            gl.glVertex2f(super.getX()+0.5f,super.getY()-0.5f);
+            gl.glVertex2f(super.getX()-0.5f,super.getY()-0.5f);
         gl.glEnd();
     }
     

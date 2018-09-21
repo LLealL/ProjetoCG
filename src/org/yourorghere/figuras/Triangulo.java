@@ -5,6 +5,8 @@
  */
 package org.yourorghere.figuras;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 import javax.media.opengl.GL;
 import static javax.media.opengl.GL.GL_TRIANGLES;
@@ -23,12 +25,12 @@ public class Triangulo extends Figura{
 
     @Override
     public void desenhar(GL gl) {
-        gl.glTranslatef(0.0f, 0.0f, -1.0f);
+        gl.glTranslatef(0.0f, 0.0f, 0.0f);
         gl.glBegin(GL_TRIANGLES);
             gl.glColor3f(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
-            gl.glVertex2f(super.getX(), (float) (super.getY() + sqrt(3.0f)/1.0f));
-            gl.glVertex2f(super.getX() +2.0f, (float) (super.getY() - sqrt(3.0f)/1.0f));
-            gl.glVertex2f(super.getX()-2.0f, (float) (super.getY() - sqrt(3.0f)/1.0f));
+            gl.glVertex2f(super.getX(), (float) (super.getY() + sin(60.0)/2.0f));
+            gl.glVertex2f((super.getX()+ (float)cos(60.0)), (float) (super.getY() - sin(60.0)/2.0f));
+            gl.glVertex2f(super.getX()-(float)cos(60.0), (float) (super.getY() - sin(60)/2.0f));
         gl.glEnd();
     }
 
