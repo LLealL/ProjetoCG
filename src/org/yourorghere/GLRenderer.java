@@ -1,5 +1,7 @@
 package org.yourorghere;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -18,8 +20,9 @@ import org.yourorghere.figuras.persistence.BancoFiguras;
  *
  * This version is equal to Brian Paul's version 1.2 1999/10/21
  */
-public class GLRenderer implements GLEventListener {
+public class GLRenderer implements GLEventListener{
 
+    
     private BancoFiguras figuras;
     
     public void Limpar(){
@@ -83,6 +86,6 @@ public class GLRenderer implements GLEventListener {
     
     public void clear(){
         figuras=null;
-    }
+    }    
 }
 
