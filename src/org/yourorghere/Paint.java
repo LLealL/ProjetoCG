@@ -6,7 +6,6 @@
 
 package org.yourorghere;
 
-import com.jogamp.opengl.util.FPSAnimator;
 import com.sun.opengl.util.Animator;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.logging.Level;
@@ -40,9 +41,13 @@ import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
-
+/**
+ *
+ * @author cylab
+ * @author mbien
+ */
 public class Paint extends JFrame {
-    private BancoFiguras figuras;
+     private BancoFiguras figuras;
     private static int i = 1;
     GLRenderer renderer;
         
@@ -125,11 +130,10 @@ public class Paint extends JFrame {
         BotaoExcUm = new JButton();
         ExcAll = new JLabel();
         BotaoExcAll = new JButton();
-        jPanel6 = new JPanel();
         jPanel7 = new JPanel();
-        jToggleButton1 = new JToggleButton();
-        jLabel1 = new JLabel();
-        jTextField1 = new JTextField();
+        BotaoMalha = new JToggleButton();
+        Malha = new JLabel();
+        TamanhoMalha = new JTextField();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -371,25 +375,19 @@ public class Paint extends JFrame {
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new Color(204, 204, 255));
-
-        GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addGap(0, 105, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         jPanel7.setBackground(new Color(204, 204, 255));
 
-        jToggleButton1.setText("On/Off");
+        BotaoMalha.setText("On/Off");
+        BotaoMalha.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                BotaoMalhaActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
-        jLabel1.setText("Malha:");
+        Malha.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        Malha.setText("Malha:");
 
-        jTextField1.setText("Tamanho");
+        TamanhoMalha.setText("Tamanho");
 
         GroupLayout jPanel7Layout = new GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -398,26 +396,26 @@ public class Paint extends JFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jToggleButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotaoMalha, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(Alignment.TRAILING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(TamanhoMalha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGap(9, 14, Short.MAX_VALUE)
-                                .addComponent(jLabel1)))
+                                .addComponent(Malha)))
                         .addGap(23, 23, 23))))
         );
         jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(Malha)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(TamanhoMalha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1)
+                .addComponent(BotaoMalha)
                 .addContainerGap())
         );
 
@@ -426,35 +424,29 @@ public class Paint extends JFrame {
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                    .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(195, 195, 195)
-                        .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
-                                .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                            .addGap(55, 55, 55)
-                            .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(66, 66, 66)
-                                    .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+                            .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(55, 55, 55)
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(66, 66, 66)
+                                .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
                     .addComponent(jPanel3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -526,6 +518,7 @@ public class Paint extends JFrame {
             float r = Float.parseFloat(text1)/255.0f;
             float g = Float.parseFloat(text2)/255.0f;
             float b = Float.parseFloat(text3)/255.0f;
+        //    System.out.println(r+" "+g+" "+b)
             if ("Lados".equals(text4)) {
                 figuras= BancoFiguras.getInstance();
                 figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b),7));
@@ -552,7 +545,29 @@ public class Paint extends JFrame {
         System.out.println(evt.getPoint());
     }//GEN-LAST:event_canvasMouseClicked
 
-    /**
+    private void BotaoMalhaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoMalhaActionPerformed
+        String text1 = TamanhoMalha.getText();
+       
+        if (BotaoMalha.isSelected()) {
+             if ("Tamanho".equals(text1)) {
+                System.out.println("informe um valor entre 0 e 10!");
+            }else{
+                float tamanho = Float.parseFloat(text1);
+                 if (tamanho > 10.0f || tamanho < 0.0f) {
+                     System.out.println("informe um valor entre 0 e 10!");
+                 }else{
+                    float tamanho1 = tamanho/10;
+                    renderer.OpenGrid(tamanho1);
+                    canvas.display();
+                 }
+            }
+        }else{
+            renderer.CloseGrid();
+            canvas.display();
+        }
+    }//GEN-LAST:event_BotaoMalhaActionPerformed
+
+  /**
      * Called from within initComponents().
      * hint: to customize the generated code choose 'Customize Code' in the contextmenu
      * of the selected UI Component you wish to cutomize in design mode.
@@ -597,6 +612,7 @@ public class Paint extends JFrame {
     private JTextField B;
     private JButton BotaoExcAll;
     private JButton BotaoExcUm;
+    private JToggleButton BotaoMalha;
     private JButton BotaoPoligono;
     private JButton BotaoQuadrado;
     private JButton BotaoTriangulo;
@@ -605,23 +621,20 @@ public class Paint extends JFrame {
     private JLabel ExcUm;
     private JTextField G;
     private JTextField Lados;
+    private JLabel Malha;
     private JLabel Poligono;
     private JLabel Quadrado;
     private JTextField R;
+    private JTextField TamanhoMalha;
     private JLabel Triangulo;
     private JLabel Verde;
     private JLabel Vermelho;
     private GLCanvas canvas;
-    private JLabel jLabel1;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JPanel jPanel4;
     private JPanel jPanel5;
-    private JPanel jPanel6;
     private JPanel jPanel7;
-    private JTextField jTextField1;
-    private JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
-
 }
