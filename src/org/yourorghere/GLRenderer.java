@@ -52,7 +52,7 @@ public class GLRenderer implements GLEventListener{
 
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(0.0f, h, 0.0, 20.0);
+        glu.gluPerspective(0.0f, h, 0.01, 1000.0);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
