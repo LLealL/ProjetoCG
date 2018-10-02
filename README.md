@@ -22,13 +22,13 @@ Paint utilizando OpenGL:
 
 O sistema deve ser capaz de exibir triângulos, quadriláteros e polígonos (N lados) definidos pelo usuário:
 
-- a) O usuário também pode definir a cor (e mudá-la posteriormente) [50%]
+- a) O usuário também pode definir a cor (e mudá-la posteriormente) [100%]
 
-- b) Alterar a escala do objeto (proporcional e não-proporcional) [0%]
+- b) Alterar a escala do objeto (proporcional e não-proporcional) [50%]
 
 - c) Mover o objeto após a sua criação utilizando o mouse [0%]
 
-- d) Excluir um objeto da cena [50%]
+- d) Excluir um objeto da cena [100%]
 
 - e) Excluir todos os objetos da cena [100%]
 
@@ -42,4 +42,4 @@ as seguintes opções devem estar disponíveis para o usuário:
 - b) Definir um tamanho de malha [100%]
 
 
-OPCIONAL: botões para salvar os objetos em um arquivo e para carregar objetos a partir de um arquivo. 
+OPCIONAL: botões para salvar os objetos em um arquivo e para carregar objetos a partir de um arquivo [0%]. 
