@@ -37,6 +37,8 @@ import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.yourorghere.figuras.Figura;
 import org.yourorghere.figuras.Poligono;
 import org.yourorghere.figuras.Quadrilatero;
@@ -146,7 +148,7 @@ public class Paint extends JFrame {
         TamanhoMalha = new JTextField();
         Listagem = new List();
         jPanel6 = new JPanel();
-        jSlider1 = new JSlider();
+        jSlider1 = new JSlider(JSlider.HORIZONTAL,0,20,10);
         jLabel1 = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -464,9 +466,24 @@ public class Paint extends JFrame {
                 .addContainerGap())
         );
 
+        Listagem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ListagemActionPerformed(evt);
+            }
+        });
+
         jPanel6.setBackground(new Color(204, 204, 255));
 
+        jSlider1.setMajorTickSpacing(5);
+        jSlider1.setMinorTickSpacing(1);
+        jSlider1.setPaintTicks(true);
+        jSlider1.setPaintLabels(true);
         jSlider1.setBackground(new Color(0, 0, 0));
+        jSlider1.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
 
         jLabel1.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
         jLabel1.setText("Escala:");
@@ -474,22 +491,19 @@ public class Paint extends JFrame {
         GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+            .addComponent(jSlider1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSlider1, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(51, 51, 51)
                 .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jSlider1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -497,9 +511,8 @@ public class Paint extends JFrame {
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
-                    .addComponent(canvas, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(Alignment.TRAILING)
                             .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addGroup(Alignment.LEADING, layout.createSequentialGroup()
@@ -512,11 +525,14 @@ public class Paint extends JFrame {
                                 .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(Listagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -691,6 +707,26 @@ public class Paint extends JFrame {
         }
         canvas.display();
     }//GEN-LAST:event_AlteraBotaoActionPerformed
+
+    private void jSlider1StateChanged(ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        JSlider source = (JSlider) evt.getSource();
+        if(!source.getValueIsAdjusting()){
+            int escala= (int) source.getValue();
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            System.out.println(escala);
+            f=figuras.getFigura(a);
+            f.realizarEscala(escala/10.0f, escala/10.0f);
+            figuras.UpdateFigura(f);
+            canvas.display();
+        }
+    }//GEN-LAST:event_jSlider1StateChanged
+
+    private void ListagemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ListagemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ListagemActionPerformed
 
   /**
      * Called from within initComponents().
