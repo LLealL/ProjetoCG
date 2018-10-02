@@ -8,6 +8,7 @@ package org.yourorghere;
 
 import com.sun.opengl.util.Animator;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -157,6 +158,7 @@ public class Paint extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        canvas.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         canvas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 canvasMouseClicked(evt);
@@ -713,7 +715,7 @@ public class Paint extends JFrame {
                  if (tamanho > 10.0f || tamanho < 0.0f) {
                      System.out.println("informe um valor entre 0 e 10!");
                  }else{
-                    float tamanho1 = tamanho/10;
+                    float tamanho1 = tamanho/10.0f;
                     renderer.OpenGrid(tamanho1);
                     canvas.display();
                  }

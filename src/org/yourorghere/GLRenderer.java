@@ -48,13 +48,14 @@ public class GLRenderer implements GLEventListener{
             height = 1;
         }
         final float h =  550.0f /  400.0f;
-        gl.glViewport(0, 0, 550, 400);
+        gl.glViewport(0, 0, width, height);
 
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(0.0f, h, 0.01, 1000.0);
-        gl.glMatrixMode(GL.GL_MODELVIEW);
-        gl.glLoadIdentity();
+        //glu.gluPerspective(0.0f, h, 0.01, 1000.0);
+         glu.gluOrtho2D(-1.0f,1.0f,-1.0f,1.0f);
+    //    gl.glMatrixMode(GL.GL_MODELVIEW);
+    //    gl.glLoadIdentity();
     }
 
     public void display(GLAutoDrawable drawable) {
@@ -96,7 +97,7 @@ public class GLRenderer implements GLEventListener{
         
         gl.glBegin(gl.GL_LINES);
         gl.glColor3f(1.0f,1.0f,1.0f); 
-        for(float x = 0.0f; x < 500.0f; x += tamanho )
+        for(float x = 0.0f; x < 550.0f; x += tamanho )
         {
             gl.glVertex3f(x-250.0f, -200.0f, 0.0f);
             gl.glVertex3f(x-250.0f, 200.0f, 0.0f);
