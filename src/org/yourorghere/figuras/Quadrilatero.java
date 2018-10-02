@@ -25,10 +25,10 @@ public class Quadrilatero extends Figura {
         gl.glTranslatef(0.0f, 0.0f, 0.0f);
         gl.glBegin(GL_QUADS);
             gl.glColor3f(super.getCor().getRed(),super.getCor().getGreen(),super.getCor().getBlue());
-            gl.glVertex2f(super.getX()-0.5f,super.getY()+0.5f);
-            gl.glVertex2f(super.getX()+0.5f,super.getY()+0.5f);
-            gl.glVertex2f(super.getX()+0.5f,super.getY()-0.5f);
-            gl.glVertex2f(super.getX()-0.5f,super.getY()-0.5f);
+            gl.glVertex2f((super.getX()-0.5f)*this.escalaX,(super.getY()+0.5f)*this.escalaY);
+            gl.glVertex2f((super.getX()+0.5f)*this.escalaX,(super.getY()+0.5f)*this.escalaY);
+            gl.glVertex2f((super.getX()+0.5f)*this.escalaX,(super.getY()-0.5f)*this.escalaY);
+            gl.glVertex2f((super.getX()-0.5f)*this.escalaX,(super.getY()-0.5f)*this.escalaY);
         gl.glEnd();
     }
     
