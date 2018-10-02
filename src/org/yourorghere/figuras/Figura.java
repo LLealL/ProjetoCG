@@ -16,14 +16,16 @@ public abstract class Figura implements Comparable<Figura>{
     private final Integer id;
     private int x;
     private int y;
-    private int escalaX;
-    private int escalaY;
+    protected float escalaX;
+    protected float escalaY;
     private RGB cor;
     
     protected Figura(Integer id,int x,int y,RGB cor){
         this.id=id;
-        this.escalaX = x;
-        this.escalaY= y;
+        this.x = x;
+        this.y= y;
+        this.escalaX=1.0f;
+        this.escalaY=1.0f;
         this.cor = cor;
     }
     
@@ -31,7 +33,7 @@ public abstract class Figura implements Comparable<Figura>{
     public void mudaCor(RGB cor){
         this.cor=cor;
     }
-    public void realizarEscala(int sx ,int sy){
+    public void realizarEscala(float sx ,float sy){
         escalaX=sx;
         escalaY=sy;
     }
@@ -54,6 +56,15 @@ public abstract class Figura implements Comparable<Figura>{
     public Integer getID(){
         return id;
     }
+    
+    protected float getEscalaX(){
+        return this.escalaX;
+    }
+    
+    protected float getEscalaY(){
+        return this.escalaY;
+    }
+    
     
     public int compareTo(Figura f) {
        return this.getID().compareTo(f.getID());
