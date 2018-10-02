@@ -150,6 +150,10 @@ public class Paint extends JFrame {
         jPanel6 = new JPanel();
         jSlider1 = new JSlider(JSlider.HORIZONTAL,0,20,10);
         jLabel1 = new JLabel();
+        jSliderX = new JSlider(JSlider.HORIZONTAL,0,20,10);
+        jSliderY = new JSlider(JSlider.HORIZONTAL,0,20,10);
+        jLabel3 = new JLabel();
+        jLabel5 = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -486,24 +490,72 @@ public class Paint extends JFrame {
         });
 
         jLabel1.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
-        jLabel1.setText("Escala:");
+        jLabel1.setText("Escala Y:");
+
+        jSliderX.setMajorTickSpacing(5);
+        jSliderX.setMinorTickSpacing(1);
+        jSliderX.setPaintLabels(true);
+        jSliderX.setPaintTicks(true);
+        jSliderX.setBackground(new Color(0, 0, 0));
+        jSliderX.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                jSliderXStateChanged(evt);
+            }
+        });
+
+        jSliderY.setMajorTickSpacing(5);
+        jSliderY.setMinorTickSpacing(1);
+        jSliderY.setPaintLabels(true);
+        jSliderY.setPaintTicks(true);
+        jSliderY.setBackground(new Color(0, 0, 0));
+        jSliderY.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                jSliderYStateChanged(evt);
+            }
+        });
+
+        jLabel3.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        jLabel3.setText("Escala Proporcional:");
+
+        jLabel5.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        jLabel5.setText("Escala X:");
 
         GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addComponent(jSlider1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                    .addComponent(jSlider1, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                    .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSliderX, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSliderY, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(41, 41, 41)
+                .addComponent(jSlider1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jSliderX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jSlider1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addComponent(jSliderY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(15, 15, 15)
+                    .addComponent(jLabel3)
+                    .addContainerGap(165, Short.MAX_VALUE)))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -527,33 +579,32 @@ public class Paint extends JFrame {
                                 .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 10, Short.MAX_VALUE)
-                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel6, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Listagem, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                    .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Listagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 13, Short.MAX_VALUE))
+                            .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -728,6 +779,38 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ListagemActionPerformed
 
+    private void jSliderXStateChanged(ChangeEvent evt) {//GEN-FIRST:event_jSliderXStateChanged
+        JSlider source = (JSlider) evt.getSource();
+        if(!source.getValueIsAdjusting()){
+            int escala= (int) source.getValue();
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            System.out.println(escala);
+            f=figuras.getFigura(a);
+            f.realizarEscalaX(escala/10.0f);
+            figuras.UpdateFigura(f);
+            canvas.display();
+        }
+    }//GEN-LAST:event_jSliderXStateChanged
+
+    private void jSliderYStateChanged(ChangeEvent evt) {//GEN-FIRST:event_jSliderYStateChanged
+        JSlider source = (JSlider) evt.getSource();
+        if(!source.getValueIsAdjusting()){
+            int escala= (int) source.getValue();
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            System.out.println(escala);
+            f=figuras.getFigura(a);
+            f.realizarEscalaY(escala/10.0f);
+            figuras.UpdateFigura(f);
+            canvas.display();
+        }
+    }//GEN-LAST:event_jSliderYStateChanged
+
   /**
      * Called from within initComponents().
      * hint: to customize the generated code choose 'Customize Code' in the contextmenu
@@ -795,6 +878,8 @@ public class Paint extends JFrame {
     private GLCanvas canvas;
     private JLabel jLabel1;
     private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel5;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
@@ -803,6 +888,8 @@ public class Paint extends JFrame {
     private JPanel jPanel6;
     private JPanel jPanel7;
     private JSlider jSlider1;
+    private JSlider jSliderX;
+    private JSlider jSliderY;
     private List list1;
     // End of variables declaration//GEN-END:variables
 }

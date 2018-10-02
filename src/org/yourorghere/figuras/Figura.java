@@ -37,6 +37,15 @@ public abstract class Figura implements Comparable<Figura>{
         escalaX=sx;
         escalaY=sy;
     }
+    
+    public void realizarEscalaX(float sx){
+        escalaX=sx;
+    }
+    
+        public void realizarEscalaY(float sy){
+        escalaY=sy;
+    }
+    
     public void transform(int tx , int ty){
         this.x=this.x+tx;
         this.y=this.y+ty;
