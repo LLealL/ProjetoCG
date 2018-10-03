@@ -5,6 +5,7 @@
  */
 package org.yourorghere.figuras;
 
+import java.io.Serializable;
 import org.yourorghere.figuras.Util.RGB;
 import javax.media.opengl.GL;
 
@@ -12,7 +13,7 @@ import javax.media.opengl.GL;
  *
  * @author keyalisth
  */
-public abstract class Figura implements Comparable<Figura>{
+public abstract class Figura implements Comparable<Figura>, Serializable{
     private final Integer id;
     private int x;
     private int y;

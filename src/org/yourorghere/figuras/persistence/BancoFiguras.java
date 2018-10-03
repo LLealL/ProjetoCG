@@ -5,6 +5,7 @@
  */
 package org.yourorghere.figuras.persistence;
 
+import java.io.FileNotFoundException;
 import static java.time.Clock.system;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,8 +13,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GL;
 import org.yourorghere.figuras.Figura;
+import org.yourorghere.figuras.Util.SerializacaoUtil;
 
 /**
  *
@@ -23,8 +27,28 @@ public class BancoFiguras{
     private TreeSet<Figura> set;
     private static BancoFiguras instance;
     
+    private final String file = "Figuras.ser";
+    
     public BancoFiguras(){
         set=new TreeSet<Figura>();
+    }
+    
+    public void salvarBanco(){
+        try {
+            SerializacaoUtil.serializar(set, file);
+        } catch (Exception ex) {
+            Logger.getLogger(BancoFiguras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void carregarBanco(){
+
+        try {
+            set= SerializacaoUtil.deserializar(file);
+        } catch (Exception ex) {
+            Logger.getLogger(BancoFiguras.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
     public static BancoFiguras getInstance(){
@@ -61,6 +85,10 @@ public class BancoFiguras{
             list.add(fig);
         }
         return list;
+    }
+    
+    public TreeSet<Figura> getFiguras(){
+        return this.set;
     }
     
     public void drawFigures(GL gl){

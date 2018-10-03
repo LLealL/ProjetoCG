@@ -14,7 +14,7 @@ import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
 
-public class GLRenderer implements GLEventListener{
+public class GLRenderer implements GLEventListener,MouseListener{
 
     
     private static boolean gridActivated=true;
@@ -108,6 +108,28 @@ public class GLRenderer implements GLEventListener{
             gl.glVertex3f(250.0f, y-200.0f, 0.0f);
         }
         gl.glEnd();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        System.out.println("clicou");
+        System.out.println(me.getPoint());
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
     
     
