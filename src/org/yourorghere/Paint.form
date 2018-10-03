@@ -4,6 +4,11 @@
   <NonVisualComponents>
     <Component class="java.awt.List" name="list1">
     </Component>
+    <Component class="javax.swing.JToggleButton" name="jToggleButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -52,12 +57,14 @@
                   <Component id="canvas" min="-2" pref="550" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="38" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel6" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="Listagem" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel6" alignment="1" max="32767" attributes="0"/>
+                  <Component id="Listagem" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jPanel9" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -68,10 +75,17 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="canvas" min="-2" pref="362" max="-2" attributes="0"/>
-                  <Component id="Listagem" min="-2" pref="371" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="canvas" min="-2" pref="362" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="Listagem" min="-2" pref="272" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel9" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -86,13 +100,14 @@
                           <Component id="jPanel4" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -631,7 +646,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jSlider1" pref="208" max="32767" attributes="0"/>
+                      <Component id="jSlider1" pref="220" max="32767" attributes="0"/>
                       <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                       <Component id="jSliderX" alignment="0" max="32767" attributes="0"/>
                       <Component id="jSliderY" alignment="1" max="32767" attributes="0"/>
@@ -684,8 +699,8 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSlider1StateChanged"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSlider(JSlider.HORIZONTAL,0,20,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jSlider1.setMajorTickSpacing(5);&#xa;jSlider1.setMinorTickSpacing(1);&#xa;jSlider1.setPaintTicks(true);&#xa;jSlider1.setPaintLabels(true);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSlider(JSlider.HORIZONTAL,0,100,10)"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jSlider1.setMajorTickSpacing(25);&#xa;jSlider1.setMinorTickSpacing(5);&#xa;jSlider1.setPaintTicks(true);&#xa;jSlider1.setPaintLabels(true);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -706,8 +721,8 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSliderXStateChanged"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSlider(JSlider.HORIZONTAL,0,20,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jSliderX.setMajorTickSpacing(5);&#xa;jSliderX.setMinorTickSpacing(1);&#xa;jSliderX.setPaintLabels(true);&#xa;jSliderX.setPaintTicks(true);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSlider(JSlider.HORIZONTAL,0,100,10)"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jSliderX.setMajorTickSpacing(25);&#xa;jSliderX.setMinorTickSpacing(5);&#xa;jSliderX.setPaintLabels(true);&#xa;jSliderX.setPaintTicks(true);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JSlider" name="jSliderY">
@@ -720,8 +735,8 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSliderYStateChanged"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSlider(JSlider.HORIZONTAL,0,20,10)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jSliderY.setMajorTickSpacing(5);&#xa;jSliderY.setMinorTickSpacing(1);&#xa;jSliderY.setPaintLabels(true);&#xa;jSliderY.setPaintTicks(true);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSlider(JSlider.HORIZONTAL,0,100,10)"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jSliderY.setMajorTickSpacing(25);&#xa;jSliderY.setMinorTickSpacing(5);&#xa;jSliderY.setPaintLabels(true);&#xa;jSliderY.setPaintTicks(true);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -743,6 +758,11 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanel8">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -784,6 +804,64 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadBtnActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel9">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="cc" red="cc" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                          <Component id="CheckTrans" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="CheckTrans" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Yu Gothic" size="18" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Transla&#xe7;&#xe3;o:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="CheckTrans">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="cc" red="cc" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Abilitar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="CheckTransStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CheckTransActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

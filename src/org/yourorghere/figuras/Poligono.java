@@ -19,7 +19,7 @@ public class Poligono extends Figura {
     private int lados;
 
     
-    public Poligono(Integer id,int x, int y,RGB cor,int n){
+    public Poligono(Integer id,float x, float y,RGB cor,int n){
         super(id,x,y,cor);
         lados=n;
     }
@@ -33,7 +33,7 @@ public class Poligono extends Figura {
         gl.glColor3f(super.getCor().getRed(), super.getCor().getGreen(), super.getCor().getBlue());
         for(int i=0;i<lados;++i){
             angulo= (2*Math.PI*i/lados);
-            gl.glVertex2d(Math.cos(angulo)*((super.getX()+0.5f))*this.escalaX,(Math.sin(angulo)*(super.getY()+0.5f))*this.escalaY);
+            gl.glVertex2d(super.getX() + Math.cos(angulo)*(+50.0f)*this.escalaX,super.getY()+ Math.sin(angulo)*(+50.0f)*this.escalaY);
         }
         gl.glEnd();
     }
