@@ -14,10 +14,10 @@ import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
 
-public class GLRenderer implements GLEventListener{
+public class GLRenderer implements GLEventListener,MouseListener{
 
     
-    private static boolean gridActivated=true;
+    private static boolean gridActivated=false;
     private static float tamanhoGrid=0.1f; 
     private BancoFiguras figuras;
     
@@ -48,11 +48,12 @@ public class GLRenderer implements GLEventListener{
             height = 1;
         }
         final float h =  550.0f /  400.0f;
-        gl.glViewport(0, 0, 550, 400);
-
+        gl.glViewport(0, 0, width, height);
+        
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(0.0f, h, 0.01, 1000.0);
+        //glu.gluPerspective(0.0f, h, 0.01, 1000.0);
+        glu.gluOrtho2D(-275,275,-200,200);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -96,17 +97,43 @@ public class GLRenderer implements GLEventListener{
         
         gl.glBegin(gl.GL_LINES);
         gl.glColor3f(1.0f,1.0f,1.0f); 
-        for(float x = 0.0f; x < 500.0f; x += tamanho )
+        for(float x = 0.0f; x < 275.0f; x += tamanho )
         {
-            gl.glVertex3f(x-250.0f, -200.0f, 0.0f);
-            gl.glVertex3f(x-250.0f, 200.0f, 0.0f);
+            gl.glVertex3f(x, -200.0f, 0.0f);
+            gl.glVertex3f(x, 200.0f, 0.0f);
+            gl.glVertex3f(-1*x,-200.0f,0.0f );
+            gl.glVertex3f(-1*x,200.0f,0.0f );
         }
-        for(float y = 0; y < 400.0f; y += tamanho )
+        for(float y = 0; y < 200.0f; y += tamanho )
         {
-            gl.glVertex3f(-250.0f, y-200.0f, 0.0f);
-            gl.glVertex3f(250.0f, y-200.0f, 0.0f);
+            gl.glVertex3f(-275.0f, y, 0.0f);
+            gl.glVertex3f(275.0f, y, 0.0f);
+            gl.glVertex3f(-275.0f, -1*y, 0.0f);
+            gl.glVertex3f(275.0f, -1*y, 0.0f);
         }
         gl.glEnd();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        System.out.println("clicou");
+        System.out.println(me.getPoint().x);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
     
     

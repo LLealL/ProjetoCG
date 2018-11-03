@@ -8,6 +8,7 @@ package org.yourorghere;
 
 import com.sun.opengl.util.Animator;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -20,6 +21,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GLCanvas;
@@ -27,6 +29,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -116,6 +119,7 @@ public class Paint extends JFrame {
     private void initComponents() {
 
         list1 = new List();
+        jToggleButton1 = new JToggleButton();
         canvas = new GLCanvas(createGLCapabilites());
         jPanel1 = new JPanel();
         Triangulo = new JLabel();
@@ -148,11 +152,24 @@ public class Paint extends JFrame {
         TamanhoMalha = new JTextField();
         Listagem = new List();
         jPanel6 = new JPanel();
-        jSlider1 = new JSlider(JSlider.HORIZONTAL,0,20,10);
+        jSlider1 = new JSlider(JSlider.HORIZONTAL,0,100,10);
         jLabel1 = new JLabel();
+        jSliderX = new JSlider(JSlider.HORIZONTAL,0,100,10);
+        jSliderY = new JSlider(JSlider.HORIZONTAL,0,100,10);
+        jLabel3 = new JLabel();
+        jLabel5 = new JLabel();
+        jPanel8 = new JPanel();
+        saveBtn = new JButton();
+        loadBtn = new JButton();
+        jPanel9 = new JPanel();
+        jLabel4 = new JLabel();
+        CheckTrans = new JCheckBox();
+
+        jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        canvas.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         canvas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 canvasMouseClicked(evt);
@@ -474,8 +491,8 @@ public class Paint extends JFrame {
 
         jPanel6.setBackground(new Color(204, 204, 255));
 
-        jSlider1.setMajorTickSpacing(5);
-        jSlider1.setMinorTickSpacing(1);
+        jSlider1.setMajorTickSpacing(25);
+        jSlider1.setMinorTickSpacing(5);
         jSlider1.setPaintTicks(true);
         jSlider1.setPaintLabels(true);
         jSlider1.setBackground(new Color(0, 0, 0));
@@ -486,24 +503,146 @@ public class Paint extends JFrame {
         });
 
         jLabel1.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
-        jLabel1.setText("Escala:");
+        jLabel1.setText("Escala Y:");
+
+        jSliderX.setMajorTickSpacing(25);
+        jSliderX.setMinorTickSpacing(5);
+        jSliderX.setPaintLabels(true);
+        jSliderX.setPaintTicks(true);
+        jSliderX.setBackground(new Color(0, 0, 0));
+        jSliderX.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                jSliderXStateChanged(evt);
+            }
+        });
+
+        jSliderY.setMajorTickSpacing(25);
+        jSliderY.setMinorTickSpacing(5);
+        jSliderY.setPaintLabels(true);
+        jSliderY.setPaintTicks(true);
+        jSliderY.setBackground(new Color(0, 0, 0));
+        jSliderY.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                jSliderYStateChanged(evt);
+            }
+        });
+
+        jLabel3.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        jLabel3.setText("Escala Proporcional:");
+
+        jLabel5.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        jLabel5.setText("Escala X:");
 
         GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addComponent(jSlider1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                    .addComponent(jSlider1, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSliderX, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSliderY, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(41, 41, 41)
+                .addComponent(jSlider1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jSliderX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jSlider1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addComponent(jSliderY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(15, 15, 15)
+                    .addComponent(jLabel3)
+                    .addContainerGap(165, Short.MAX_VALUE)))
+        );
+
+        jPanel8.setBackground(new Color(204, 204, 255));
+
+        saveBtn.setText("Salvar Figuras");
+        saveBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
+        loadBtn.setText("Carregar Figuras");
+        loadBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                loadBtnActionPerformed(evt);
+            }
+        });
+
+        GroupLayout jPanel8Layout = new GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(jPanel8Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(Alignment.LEADING, false)
+                    .addComponent(loadBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saveBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(jPanel8Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(saveBtn)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(loadBtn)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        jPanel9.setBackground(new Color(204, 204, 255));
+
+        jLabel4.setFont(new Font("Yu Gothic", 0, 18)); // NOI18N
+        jLabel4.setText("Translação:");
+
+        CheckTrans.setBackground(new Color(204, 204, 255));
+        CheckTrans.setText("Abilitar");
+        CheckTrans.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent evt) {
+                CheckTransStateChanged(evt);
+            }
+        });
+        CheckTrans.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                CheckTransActionPerformed(evt);
+            }
+        });
+
+        GroupLayout jPanel9Layout = new GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(jPanel9Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addGroup(jPanel9Layout.createParallelGroup(Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(CheckTrans)))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(jPanel9Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(CheckTrans)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -527,33 +666,45 @@ public class Paint extends JFrame {
                                 .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 10, Short.MAX_VALUE)
-                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                    .addComponent(jPanel6, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Listagem, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 272, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(jPanel9, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)))
+                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Listagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 13, Short.MAX_VALUE))
+                            .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         pack();
@@ -579,8 +730,9 @@ public class Paint extends JFrame {
             float g = Float.parseFloat(text2)/255.0f;
             float b = Float.parseFloat(text3)/255.0f;
             figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Triangulo(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
-            Listagem.add("Triângulo "+t +" id: "+figuras.getNewID());
+            Figura f = new Triangulo(figuras.getNewID()+1,0.0f,0.0f,new RGB(r,g,b));
+            figuras.addFigura(f);
+            Listagem.add(f.getClass().getSimpleName()+" "+t +" id: "+f.getID());
             t++;
         }
         canvas.display();
@@ -599,8 +751,9 @@ public class Paint extends JFrame {
             float g = Float.parseFloat(text2)/255.0f;
             float b = Float.parseFloat(text3)/255.0f;
             figuras= BancoFiguras.getInstance();
-            figuras.addFigura(new Quadrilatero(figuras.getNewID()+1,0,0,new RGB(r,g,b)));
-            Listagem.add("Quadrilátero "+q +" id: "+figuras.getNewID());
+            Figura f = new Quadrilatero(figuras.getNewID()+1,0.0f,0.0f,new RGB(r,g,b));
+            figuras.addFigura(f);
+            Listagem.add(f.getClass().getSimpleName()+" "+q +" id: "+f.getID());
             q++;
         }
         canvas.display();
@@ -622,15 +775,17 @@ public class Paint extends JFrame {
         //    System.out.println(r+" "+g+" "+b)
             if ("Lados".equals(text4)) {
                 figuras= BancoFiguras.getInstance();
-                figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b),7));
-                Listagem.add("Polígono "+p +" id: "+figuras.getNewID());
+                Figura f= new Poligono(figuras.getNewID()+1,0.0f,0.0f,new RGB(r,g,b),7);
+                figuras.addFigura(f);
+               Listagem.add(f.getClass().getSimpleName()+" "+p +" id: "+f.getID());
                 p++;
                 //poligono 7 lados
             }else{
                 int lados = Integer.parseInt(text4);
                 figuras = BancoFiguras.getInstance();
-                figuras.addFigura(new Poligono(figuras.getNewID()+1,0,0,new RGB(r,g,b), lados));
-                Listagem.add("Polígono "+p +" id: "+figuras.getNewID());
+                Figura f= new Poligono(figuras.getNewID()+1,0.0f,0.0f,new RGB(r,g,b),lados);
+                figuras.addFigura(f);
+                Listagem.add(f.getClass().getSimpleName()+" "+p +" id: "+f.getID());
                 p++;
             }
         }
@@ -647,8 +802,20 @@ public class Paint extends JFrame {
     }//GEN-LAST:event_BotaoExcAllActionPerformed
 
     private void canvasMouseClicked(MouseEvent evt) {//GEN-FIRST:event_canvasMouseClicked
-        System.out.println("clicou");
-        System.out.println(evt.getPoint());
+        float x;
+        float y;
+        
+        x = -275 + (evt.getX()/ 550.0f) * 550;
+        y = 200 - (evt.getY() / 400.0f) * 400;
+        if (CheckTrans.isSelected()) {
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            f = figuras.getFigura(a);
+            f.transform(x, y);
+            canvas.display();
+        }
     }//GEN-LAST:event_canvasMouseClicked
 
     private void BotaoMalhaActionPerformed(ActionEvent evt) {//GEN-FIRST:event_BotaoMalhaActionPerformed
@@ -662,7 +829,7 @@ public class Paint extends JFrame {
                  if (tamanho > 10.0f || tamanho < 0.0f) {
                      System.out.println("informe um valor entre 0 e 10!");
                  }else{
-                    float tamanho1 = tamanho/10;
+                    float tamanho1 = 200.0f/tamanho;
                     renderer.OpenGrid(tamanho1);
                     canvas.display();
                  }
@@ -678,7 +845,6 @@ public class Paint extends JFrame {
         figuras = BancoFiguras.getInstance();
         int a = Listagem.getSelectedIndex();
         a++;
-        System.out.println(a);
         f = figuras.getFigura(a);
         figuras.removeFigura(f);
         a--;
@@ -726,8 +892,95 @@ public class Paint extends JFrame {
 
     private void ListagemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ListagemActionPerformed
         // TODO add your handling code here:
+        int a= Listagem.getSelectedIndex();
+        a++;
+        System.out.println(BancoFiguras.getInstance().getFigura(a).getClass().getSimpleName());
     }//GEN-LAST:event_ListagemActionPerformed
 
+    private void jSliderXStateChanged(ChangeEvent evt) {//GEN-FIRST:event_jSliderXStateChanged
+        JSlider source = (JSlider) evt.getSource();
+        if(!source.getValueIsAdjusting()){
+            int escala= (int) source.getValue();
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            System.out.println(escala);
+            f=figuras.getFigura(a);
+            f.realizarEscalaX(escala/10.0f);
+            figuras.UpdateFigura(f);
+            canvas.display();
+        }
+    }//GEN-LAST:event_jSliderXStateChanged
+
+    private void jSliderYStateChanged(ChangeEvent evt) {//GEN-FIRST:event_jSliderYStateChanged
+        JSlider source = (JSlider) evt.getSource();
+        if(!source.getValueIsAdjusting()){
+            int escala= (int) source.getValue();
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            System.out.println(escala);
+            f=figuras.getFigura(a);
+            f.realizarEscalaY(escala/10.0f);
+            figuras.UpdateFigura(f);
+            canvas.display();
+        }
+    }//GEN-LAST:event_jSliderYStateChanged
+
+    private void saveBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // TODO add your handling code here:
+        figuras = BancoFiguras.getInstance();
+        figuras.salvarBanco();
+        
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void loadBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_loadBtnActionPerformed
+        // TODO add your handling code here:
+        figuras = BancoFiguras.getInstance();
+        figuras.carregarBanco();
+        
+        Listagem.getActionListeners();
+        p=1;
+        q=1;
+        t=1;
+
+        for(Figura figura : figuras.getFiguras()){
+            if(figura instanceof Poligono){
+                Listagem.add(figura.getClass().getSimpleName()+" "+p+" id: "+figura.getID());
+                p++;
+            }else if( figura instanceof Quadrilatero){
+                Listagem.add(figura.getClass().getSimpleName()+" "+q+" id: "+figura.getID());
+                q++;
+            }else{
+                Listagem.add(figura.getClass().getSimpleName()+" "+t+" id: "+figura.getID());
+                t++;
+            }
+
+            System.out.println(figura.getClass().getSimpleName());
+        }       
+        canvas.display();
+        
+    }//GEN-LAST:event_loadBtnActionPerformed
+
+    private void CheckTransActionPerformed(ActionEvent evt) {//GEN-FIRST:event_CheckTransActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CheckTransActionPerformed
+
+    private void CheckTransStateChanged(ChangeEvent evt) {//GEN-FIRST:event_CheckTransStateChanged
+       /*    JCheckBox source = (JCheckBox) evt.getSource();
+        if (source.isSelected()) {
+            Listagem.getActionListeners();
+            figuras = BancoFiguras.getInstance();
+            int a = Listagem.getSelectedIndex();
+            a++;
+            f = figuras.getFigura(a);
+        }*/
+    }//GEN-LAST:event_CheckTransStateChanged
+
+    
+    
   /**
      * Called from within initComponents().
      * hint: to customize the generated code choose 'Customize Code' in the contextmenu
@@ -778,6 +1031,7 @@ public class Paint extends JFrame {
     private JButton BotaoPoligono;
     private JButton BotaoQuadrado;
     private JButton BotaoTriangulo;
+    private JCheckBox CheckTrans;
     private JLabel Cores;
     private JLabel ExcAll;
     private JLabel ExcUm;
@@ -795,6 +1049,9 @@ public class Paint extends JFrame {
     private GLCanvas canvas;
     private JLabel jLabel1;
     private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
@@ -802,7 +1059,14 @@ public class Paint extends JFrame {
     private JPanel jPanel5;
     private JPanel jPanel6;
     private JPanel jPanel7;
+    private JPanel jPanel8;
+    private JPanel jPanel9;
     private JSlider jSlider1;
+    private JSlider jSliderX;
+    private JSlider jSliderY;
+    private JToggleButton jToggleButton1;
     private List list1;
+    private JButton loadBtn;
+    private JButton saveBtn;
     // End of variables declaration//GEN-END:variables
 }
