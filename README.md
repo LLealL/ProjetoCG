@@ -51,12 +51,12 @@ Visualizador 3D:
   
 - 1) O usuário poderá escolher um objeto que será visualizado (Cubo, Pirâmide, Cone, Cilindro ou um modelo a
 partir de um arquivo .obj). O objeto deverá ser translúcido e o usuário irá visualizar além do objeto, os eixos
-X, Y e Z. O usuário poderá também exibir / ocultar os planos (grade quadriculada) XY, XZ e YZ. [0%]
+X, Y e Z. O usuário poderá também exibir / ocultar os planos (grade quadriculada) XY, XZ e YZ. [25%]
 
 - 2) Na interface gráfica, o usuário poderá montar uma sequência de transformações 3D (translação, rotação,
 escala, reflexão, cisalhamento) e o visualizador poderá exibir/ocultar o objeto antes e depois da sequência
 de transformação ou fazer uma animação que mostre como o objeto vai se transformando da posição
-original até a posição final (utilize interpolação para realizar a animação). [0%]
+original até a posição final (utilize interpolação para realizar a animação). [10%]
 
 - 3) O sistema deverá ter alguns objetos que possuam normal, materiais, etc., para que sejam iluminados
 corretamente pelo OpenGL. [0%]
