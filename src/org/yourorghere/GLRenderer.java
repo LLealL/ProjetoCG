@@ -1,12 +1,17 @@
 package org.yourorghere;
 
+import com.sun.opengl.util.texture.Texture;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
+import javax.media.opengl.GLException;
 import javax.media.opengl.glu.GLU;
 import org.yourorghere.figuras.Figura;
 import org.yourorghere.figuras.GLModel;
@@ -18,14 +23,17 @@ import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
 
 
-public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
+public class GLRenderer implements GLEventListener{
     
+    private Texture tex=null;
     private GLModel model=null;
-    
+    private float rquad=0.0f;
     private static boolean gridActivated=false;
     private static float tamanhoGrid=0.1f; 
     private BancoFiguras figuras;
+    private static float x=0f,y=0f,z=0f;
     
+    private static float xangle=0.0f,yangle=0.0f,zangle=0.0f;
     
     public void init(GLAutoDrawable drawable) {
         // Use debug pipeline
@@ -37,10 +45,19 @@ public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
         // Enable VSync
         gl.setSwapInterval(1);
 
-        if(false==loadModels(gl)){
-            System.exit(1);
+  
+        try {
+            if(false==loadModels(gl)){
+                System.exit(1);
+            }
+            
+             setLight(gl);
+        } catch (GLException ex) {
+            Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
-       setLight(gl);
+
         
         
         gl.glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -67,7 +84,7 @@ public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
         
         gl.glMatrixMode (GL.GL_PROJECTION);
         gl.glLoadIdentity ();
-        glu.gluPerspective(45.0f, h, 0, 200);
+        glu.gluPerspective(45.0f, h, 0.01f, 200f);
         gl.glMatrixMode (GL.GL_MODELVIEW);
         
 
@@ -79,7 +96,7 @@ public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
 
 	gl.glClear (GL.GL_COLOR_BUFFER_BIT|GL.GL_DEPTH_BUFFER_BIT);
 	gl.glLoadIdentity();
-        gl.glTranslatef(0f, 0f, -1);
+        gl.glTranslatef(0f+x, 0f+y, -1+z);
         gl.glRotatef(15.0f, 1.0f, 0.0f, 0.0f);
         gl.glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
 
@@ -100,8 +117,18 @@ public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
          gl.glVertex3f(0.0f, 0.0f, 0.0f);
          gl.glVertex3f(0.0f, 0.0f, -1000.0f);
         gl.glEnd();
+        
+        gl.glRotatef(xangle,1,0,0);
+        gl.glRotatef(yangle,0,1,0);
+        gl.glRotatef(zangle,0,0,1);
+        
 
+       // gl.glRotatef(rquad,1f,1f,1f);
         model.opengldraw(gl);
+        
+        
+        
+        rquad-=0.30f;
         
         gl.glFlush ();	   
     }
@@ -143,46 +170,11 @@ public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
         gl.glEnd();
     }
 
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        System.out.println("clicou");
-        System.out.println(me.getPoint().x);
-    }
 
-    @Override
-    public void mousePressed(MouseEvent me) {
-    }
+    private boolean loadModels(GL gl) throws GLException, IOException {
+		model = ModelLoaderOBJ.LoadModel("./models/cube.obj",
+				"./models/cube.mtl", gl);
 
-    @Override
-    public void mouseReleased(MouseEvent me) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private boolean loadModels(GL gl) {
-		model = ModelLoaderOBJ.LoadModel("./models/peixe.obj",
-				"./models/peixe.mtl", gl);
 		if (model == null) {
 			return false;
 		}
@@ -204,8 +196,28 @@ public class GLRenderer implements GLEventListener,MouseListener,KeyListener{
 		gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, lightColorSpecular, 0);
 		gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, lightColorSpecular, 0);
 		gl.glEnable(GL.GL_LIGHT1);
+                gl.glEnable(GL.GL_DEPTH_TEST);
 		
 	}
     
+        public static void moveCam(float i,float u, float p ){
+            x=x+i;
+            y=y+u;
+            z=z+p;
+                  
+        }
+        
+        public static void resetCam(){
+            x=0f;
+            y=0f;
+            z=0f;
+        }
+        
+        public static void rotateCam(float i,float u , float p){
+            xangle=xangle+i;
+            yangle=yangle+u;
+            zangle=zangle+p;
+        }
+
     
 }

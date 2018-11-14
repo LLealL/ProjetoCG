@@ -15,10 +15,15 @@ import java.awt.Font;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.TreeSet;
@@ -98,6 +103,7 @@ public class Paint extends JFrame {
                 }).start();
             }
         });
+        animator.start();
     }
 
     @Override
@@ -152,15 +158,36 @@ public class Paint extends JFrame {
         jTextField16 = new JTextField();
         jLabel6 = new JLabel();
         jButton7 = new JButton();
+        resetCambtn = new JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         canvas.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         canvas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 canvasMouseClicked(evt);
+            }
+        });
+        canvas.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent evt) {
+                canvasMouseDragged(evt);
+            }
+        });
+        canvas.addMouseWheelListener(new MouseWheelListener() {
+            public void mouseWheelMoved(MouseWheelEvent evt) {
+                canvasMouseWheelMoved(evt);
+            }
+        });
+        canvas.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                canvasKeyPressed(evt);
             }
         });
 
@@ -196,7 +223,7 @@ public class Paint extends JFrame {
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
@@ -419,6 +446,13 @@ public class Paint extends JFrame {
 
         jButton7.setText("Executar");
 
+        resetCambtn.setText("DefaultCamera");
+        resetCambtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                resetCambtnActionPerformed(evt);
+            }
+        });
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -431,7 +465,9 @@ public class Paint extends JFrame {
                         .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(resetCambtn))
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
@@ -449,11 +485,16 @@ public class Paint extends JFrame {
                     .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                     .addComponent(Listagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(jButton7)
+                    .addComponent(resetCambtn))
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
@@ -507,6 +548,47 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField15ActionPerformed
 
+    private void formKeyPressed(KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+
+    }//GEN-LAST:event_formKeyPressed
+
+    private void canvasKeyPressed(KeyEvent evt) {//GEN-FIRST:event_canvasKeyPressed
+        // TODO add your handling code here:
+
+        if(evt.getKeyChar()=='W'||evt.getKeyChar()=='w'){
+            GLRenderer.moveCam(0.0f, -0.1f, 0f);
+        }else if(evt.getKeyChar()=='S'||evt.getKeyChar()=='s'){
+            GLRenderer.moveCam(0.0f, 0.1f, 0f);
+        }else if(evt.getKeyChar()=='A'||evt.getKeyChar()=='a'){
+            GLRenderer.moveCam(0.1f, 0f, 0f);
+        }else if(evt.getKeyChar()=='D'||evt.getKeyChar()=='d'){
+            GLRenderer.moveCam(-0.1f,0f,0f);
+        }
+    }//GEN-LAST:event_canvasKeyPressed
+
+    private void canvasMouseWheelMoved(MouseWheelEvent evt) {//GEN-FIRST:event_canvasMouseWheelMoved
+        // TODO add your handling code here:
+        int notches = evt.getWheelRotation();
+        if(evt.getScrollType()==MouseWheelEvent.WHEEL_UNIT_SCROLL){
+            GLRenderer.moveCam(0f, 0f, notches*-0.1f);
+        }
+    }//GEN-LAST:event_canvasMouseWheelMoved
+
+    private void resetCambtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_resetCambtnActionPerformed
+       GLRenderer.resetCam();
+    }//GEN-LAST:event_resetCambtnActionPerformed
+
+    private void canvasMouseDragged(MouseEvent evt) {//GEN-FIRST:event_canvasMouseDragged
+        // TODO add your handling code here:
+        float x = evt.getX();
+        float y= evt.getY();
+        
+        
+        GLRenderer.rotateCam(1, 1, 1);
+        
+    }//GEN-LAST:event_canvasMouseDragged
+
+    
     
     
   /**
@@ -543,7 +625,7 @@ public class Paint extends JFrame {
                 }
 
                 Paint frame = new Paint();
-                
+                frame.show();
                 frame.setVisible(true);
             }
         });
@@ -584,5 +666,6 @@ public class Paint extends JFrame {
     private JTextField jTextField7;
     private JToggleButton jToggleButton1;
     private List list1;
+    private JButton resetCambtn;
     // End of variables declaration//GEN-END:variables
 }
