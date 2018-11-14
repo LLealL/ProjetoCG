@@ -5,9 +5,12 @@
  */
 package org.yourorghere.figuras;
 
+import com.sun.opengl.util.texture.Texture;
+import com.sun.opengl.util.texture.TextureIO;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import javax.imageio.ImageIO;
 import javax.media.opengl.*;
 import org.yourorghere.figuras.Util.MtlLoader;
 
@@ -210,7 +213,7 @@ public class GLModel{
     private void loadmaterials() {
 		FileReader frm;
 		String refm = mtl_path;
-
+                
 		try {
 			frm = new FileReader(refm);
 			BufferedReader brm = new BufferedReader(frm);
@@ -340,4 +343,8 @@ public class GLModel{
         gl.glCallList(objectlist);
         gl.glDisable(GL.GL_COLOR_MATERIAL);
     }
+    
+
 }
+    
+ 
