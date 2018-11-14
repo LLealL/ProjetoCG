@@ -26,8 +26,10 @@ import org.yourorghere.figuras.persistence.BancoFiguras;
 
 public class GLRenderer implements GLEventListener{
     
+    private static GL glstatic;
     private Texture tex=null;
     private GLModel model=null;
+    private GLModel newmodel=null;
     private float rquad=0.0f;
     private static boolean gridActivated=false;
     private static float tamanhoGrid=0.1f; 
@@ -41,6 +43,7 @@ public class GLRenderer implements GLEventListener{
         // drawable.setGL(new DebugGL(drawable.getGL()));
 
         GL gl = drawable.getGL();
+        glstatic= gl;
         System.err.println("INIT GL IS: " + gl.getClass().getName());
         
         // Enable VSync
@@ -48,16 +51,16 @@ public class GLRenderer implements GLEventListener{
 
   
         try {
-            if(false==loadModels(gl)){
+            if(false==loadModels(gl,"./models/Cilindro.obj","./models/Cilindro.mtl")){
                 System.exit(1);
             }
-            
              setLight(gl);
         } catch (GLException ex) {
             Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
         }
+
 
         
         
@@ -101,17 +104,24 @@ public class GLRenderer implements GLEventListener{
 	gl.glLoadIdentity();
         gl.glTranslatef(0f+x, 0f+y, -1+z);
 
-        renderWorld(gl);
-        
         gl.glRotatef(xangle,1,0,0);
         gl.glRotatef(yangle,0,1,0);
         gl.glRotatef(zangle,0,0,1);
         
+        
+        renderWorld(gl);
+        
 
         gl.glEnable(GL.GL_LIGHTING);
        // gl.glRotatef(rquad,1f,1f,1f);
-        model.opengldraw(gl);
-        
+       if(model!=null){
+       model.opengldraw(gl);
+       }
+       if(newmodel!=null){
+           newmodel.opengldraw(gl);
+          
+       }
+
         
         
         rquad-=0.30f;
@@ -157,9 +167,9 @@ public class GLRenderer implements GLEventListener{
     }
 
 
-    private boolean loadModels(GL gl) throws GLException, IOException {
-		model = ModelLoaderOBJ.LoadModel("./models/sphere.obj",
-				"./models/sphere.mtl", gl);
+    public boolean loadModels(GL gl,String obj,String mtl) throws GLException, IOException {
+            model = ModelLoaderOBJ.LoadModel(obj,
+				mtl, gl);
 
 		if (model == null) {
 			return false;
@@ -206,6 +216,9 @@ public class GLRenderer implements GLEventListener{
             x=0f;
             y=0f;
             z=0f;
+            xangle=0f;
+            yangle=0f;
+            zangle=0f;
         }
         
         public static void rotateCam(float i,float u , float p){
@@ -255,5 +268,21 @@ public class GLRenderer implements GLEventListener{
         }
 
 
+        public boolean loadNewModel(GL gl,String s,String m){
+                try {
+                    
+                    model= ModelLoaderOBJ.LoadModel(s,
+				m, gl);
+
+                    if (model == null) {
+                            return false;
+                    }
+                    System.out.println(model.numpolygons());
+                    return true; 
+                } catch (GLException ex) {
+                    Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return false;
+        }
     
 }

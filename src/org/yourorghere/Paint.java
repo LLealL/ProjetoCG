@@ -26,11 +26,14 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import static java.lang.Math.abs;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -66,6 +69,8 @@ public class Paint extends JFrame {
     private static int t = 1;
     private static int q = 1;
     private static int p = 1;
+    private static float oldx=0;
+    private static float oldy=0;
     GLRenderer renderer;
         
     static {
@@ -130,8 +135,9 @@ public class Paint extends JFrame {
         Listagem = new List();
         jPanel1 = new JPanel();
         jButton1 = new JButton();
-        jTextField1 = new JTextField();
+        fileTextmtl = new JTextField();
         jLabel1 = new JLabel();
+        fileTextobj = new JTextField();
         jPanel2 = new JPanel();
         jPanel3 = new JPanel();
         jButton2 = new JButton();
@@ -198,36 +204,48 @@ public class Paint extends JFrame {
         });
 
         jButton1.setText("Carregar");
-
-        jTextField1.setText("Nome Do Arquivo.obj");
-        jTextField1.addActionListener(new ActionListener() {
+        jButton1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        fileTextmtl.setText("./models/cube.mtl");
+        fileTextmtl.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                fileTextmtlActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Carregar um arquivo .obj");
 
+        fileTextobj.setText("./models/cube.obj");
+
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, Alignment.TRAILING)
+                    .addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                    .addComponent(fileTextmtl, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                    .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)))
+                        .addComponent(fileTextobj, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(fileTextobj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(fileTextmtl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jButton2.setText("adicionar");
@@ -266,15 +284,16 @@ public class Paint extends JFrame {
         );
         jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jButton2))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(17, 17, 17))
         );
 
         jButton3.setText("adicionar");
@@ -313,15 +332,16 @@ public class Paint extends JFrame {
         );
         jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jButton3))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(17, 17, 17))
         );
 
         jButton5.setText("adicionar");
@@ -343,7 +363,7 @@ public class Paint extends JFrame {
         });
 
         jLabel5.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Rotação");
+        jLabel5.setText("RotaÃ§Ã£o");
 
         GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -367,8 +387,9 @@ public class Paint extends JFrame {
                 .addComponent(jTextField12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField11, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jButton5))
+                .addGap(11, 11, 11)
+                .addComponent(jButton5)
+                .addContainerGap())
         );
 
         jButton6.setText("jButton6");
@@ -415,23 +436,23 @@ public class Paint extends JFrame {
                 .addComponent(jTextField15, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jTextField16, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jButton6)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -441,7 +462,7 @@ public class Paint extends JFrame {
                     .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButton7.setText("Executar");
@@ -460,42 +481,36 @@ public class Paint extends JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton7)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                            .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(resetCambtn))
-                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton7)
-                                .addGap(61, 61, 61))))))
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 463, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-                    .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Listagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(resetCambtn))
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                    .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 446, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton7)))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(118, Short.MAX_VALUE))
+                        .addComponent(resetCambtn)
+                        .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -512,9 +527,9 @@ public class Paint extends JFrame {
         System.out.println(BancoFiguras.getInstance().getFigura(a).getClass().getSimpleName());
     }//GEN-LAST:event_ListagemActionPerformed
 
-    private void jTextField1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void fileTextmtlActionPerformed(ActionEvent evt) {//GEN-FIRST:event_fileTextmtlActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_fileTextmtlActionPerformed
 
     private void jTextField3ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
@@ -583,10 +598,43 @@ public class Paint extends JFrame {
         float x = evt.getX();
         float y= evt.getY();
         
+        if(abs(x-oldx)<abs(y-oldy)){
+            if(y-oldy<0){
+                GLRenderer.rotateCam(1, 0, 0);
+            }else if(y-oldy>0){
+                GLRenderer.rotateCam(-1, 0, 0);
+            }
+            oldx=x;
+            oldy=y;
+        }else if(abs(x-oldx)>abs(y-oldy)){
+            if(x-oldx<0){
+                GLRenderer.rotateCam(0, 1, 0);
+            }else if(x-oldx>0){
+                GLRenderer.rotateCam(0,-1, 0);
+            }
+            oldx=x;
+            oldy=y;
+        }else{
+            
+        }
+       
         
-        GLRenderer.rotateCam(1, 1, 1);
+        //Renderer.rotateCam(1, 1, 1);
         
     }//GEN-LAST:event_canvasMouseDragged
+
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+
+          //  renderer.loadNewModel(canvas.getGL(),fileTextobj.getText().toString(), fileTextmtl.getText().toString());
+            System.out.println(fileTextmtl.getText());
+            System.out.println(fileTextobj.getText());
+
+        } catch (GLException ex) {
+            Logger.getLogger(Paint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     
@@ -594,7 +642,7 @@ public class Paint extends JFrame {
   /**
      * Called from within initComponents().
      * hint: to customize the generated code choose 'Customize Code' in the contextmenu
-     * of the selected UI Component you wish to cutomize in design mode.
+//     * of the selected UI Component you wish to cutomize in design mode.
      * @return Returns customized GLCapabilities.
      */
     private GLCapabilities createGLCapabilites() {
@@ -634,6 +682,8 @@ public class Paint extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private List Listagem;
     private GLCanvas canvas;
+    private JTextField fileTextmtl;
+    private JTextField fileTextobj;
     private JButton jButton1;
     private JButton jButton2;
     private JButton jButton3;
@@ -651,7 +701,6 @@ public class Paint extends JFrame {
     private JPanel jPanel4;
     private JPanel jPanel6;
     private JPanel jPanel7;
-    private JTextField jTextField1;
     private JTextField jTextField11;
     private JTextField jTextField12;
     private JTextField jTextField13;

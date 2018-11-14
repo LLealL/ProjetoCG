@@ -5,27 +5,23 @@
  */
 package org.yourorghere.transforms;
 
+
+import java.util.Stack;
 import javax.media.opengl.GL;
+
 
 /**
  *
  * @author lucas
  */
-public  class Cisalhamento extends Transform {
-    
-    protected float x,y,z;
-    
-    
-    public Cisalhamento(float X,float Y,float Z){
-        x=X;
-        y=Y;
-        z=Z;
-    }
+public class TransformStack {
 
-    @Override
-    public float[][] doTransform(){
-        
-        return matrix;
+    
+    private Stack<Transform> pilha;
+    
+    public TransformStack(){
+        pilha= new Stack<Transform> ();
     }
     
+
 }
