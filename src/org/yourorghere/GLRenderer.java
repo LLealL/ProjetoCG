@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GL;
@@ -94,35 +95,20 @@ public class GLRenderer implements GLEventListener{
 	
 	GL gl = drawable.getGL();
 
+
+        
 	gl.glClear (GL.GL_COLOR_BUFFER_BIT|GL.GL_DEPTH_BUFFER_BIT);
 	gl.glLoadIdentity();
         gl.glTranslatef(0f+x, 0f+y, -1+z);
-        gl.glRotatef(15.0f, 1.0f, 0.0f, 0.0f);
-        gl.glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
 
-        gl.glLineWidth(1);
-        gl.glColor3f(1.0f, 1.0f, 1.0f);
-        gl.glBegin(GL.GL_LINES);
-         gl.glVertex3f(0.0f, 0.0f, 0.0f);
-         gl.glVertex3f(1000.0f, 0.0f, 0.0f);
-         gl.glVertex3f(0.0f, 0.0f, 0.0f);
-         gl.glVertex3f(0.0f, 1000.0f, 0.0f);
-         gl.glVertex3f(0.0f, 0.0f, 0.0f);
-         gl.glVertex3f(0.0f, 0.0f, 1000.0f);   
-        gl.glColor3f(0.1f, 0.1f, 0.1f);
-         gl.glVertex3f(0.0f, 0.0f, 0.0f);
-         gl.glVertex3f(-1000.0f, 0.0f, 0.0f);
-         gl.glVertex3f(0.0f, 0.0f, 0.0f);
-         gl.glVertex3f(0.0f, -1000.0f, 0.0f);
-         gl.glVertex3f(0.0f, 0.0f, 0.0f);
-         gl.glVertex3f(0.0f, 0.0f, -1000.0f);
-        gl.glEnd();
+        renderWorld(gl);
         
         gl.glRotatef(xangle,1,0,0);
         gl.glRotatef(yangle,0,1,0);
         gl.glRotatef(zangle,0,0,1);
         
 
+        gl.glEnable(GL.GL_LIGHTING);
        // gl.glRotatef(rquad,1f,1f,1f);
         model.opengldraw(gl);
         
@@ -172,8 +158,8 @@ public class GLRenderer implements GLEventListener{
 
 
     private boolean loadModels(GL gl) throws GLException, IOException {
-		model = ModelLoaderOBJ.LoadModel("./models/cube.obj",
-				"./models/cube.mtl", gl);
+		model = ModelLoaderOBJ.LoadModel("./models/sphere.obj",
+				"./models/sphere.mtl", gl);
 
 		if (model == null) {
 			return false;
@@ -185,17 +171,26 @@ public class GLRenderer implements GLEventListener{
 		
 		gl.glEnable(GL.GL_LIGHTING);
 		
-		float SHINE_ALL_DIRECTIONS = 1;
-		float[] lightPos = { -30, 30, 30, SHINE_ALL_DIRECTIONS };
-		float[] lightColorAmbient = { 0.02f, 0.02f, 0.02f, 1f };
+		float SHINE_ALL_DIRECTIONS = 5;
+		float[] lightPos = { -15, 15, 15, SHINE_ALL_DIRECTIONS };
+		float[] lightColorAmbient = { 0.5f, 0.5f, 0.5f, 1f };
 		float[] lightColorSpecular = { 0.9f, 0.9f, 0.9f, 1f };
+                float[] espec ={1f,1f,1f,1f};
+                FloatBuffer especularidade = FloatBuffer.wrap(espec);
+                int specMaterial = 60;
 
 		// Set light parameters.
 		gl.glLightfv(GL.GL_LIGHT1, GL.GL_POSITION, lightPos, 0);
 		gl.glLightfv(GL.GL_LIGHT1, GL.GL_AMBIENT, lightColorAmbient, 0);
 		gl.glLightfv(GL.GL_LIGHT1, GL.GL_SPECULAR, lightColorSpecular, 0);
 		gl.glLightfv(GL.GL_LIGHT1, GL.GL_DIFFUSE, lightColorSpecular, 0);
+                
 		gl.glEnable(GL.GL_LIGHT1);
+                gl.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, especularidade);
+                gl.glMateriali(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, specMaterial);
+                
+                gl.glEnable(GL.GL_COLOR_MATERIAL);
+                gl.glEnable(GL.GL_NORMALIZE);
                 gl.glEnable(GL.GL_DEPTH_TEST);
 		
 	}
@@ -218,6 +213,47 @@ public class GLRenderer implements GLEventListener{
             yangle=yangle+u;
             zangle=zangle+p;
         }
+        
+        private void renderWorld(GL gl){
+        float x=0.0f,z=0.0f;
+            
+        gl.glRotatef(15.0f, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
+        
+        gl.glDisable(GL.GL_LIGHTING);
+        gl.glLineWidth(1);
+        gl.glColor3f(0.2f, 0.2f, 0.2f);
+        
+        gl.glBegin(GL.GL_LINES);
+        for(x=-1000;x<1000;x+=1F){
+            if(x==0){
+                continue;
+            }
+         gl.glVertex3f(x, 0.0f, -1000.0f);
+         gl.glVertex3f(x, 0.0f, 1000.0f);
+        }
+        for(z=-1000;z<1000;z+=1F){
+            if(z==0){
+                continue;
+            }
+         gl.glVertex3f(-1000.0f, 0.0f, z);
+         gl.glVertex3f(1000.0f, 0.0f, z);
+        }
+        
+        gl.glDisable(GL.GL_LIGHTING);
+        gl.glLineWidth(1);
+        gl.glColor3f(1.0f, 1.0f, 1.0f);
+        gl.glBegin(GL.GL_LINES);
+         gl.glVertex3f(-1000.0f, 0.0f, 0.0f);
+         gl.glVertex3f(1000.0f, 0.0f, 0.0f);
+         gl.glVertex3f(0.0f, -1000.0f, 0.0f);
+         gl.glVertex3f(0.0f, 1000.0f, 0.0f);
+         gl.glVertex3f(0.0f, 0.0f, -1000.0f);
+         gl.glVertex3f(0.0f, 0.0f, 1000.0f);   
+
+        gl.glEnd();
+        }
+
 
     
 }
