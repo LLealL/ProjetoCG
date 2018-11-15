@@ -21,9 +21,9 @@ public class Transladar extends Transform {
     }
 
     public float[][] doTransform() {
-        matrix[0][3]=x;
-        matrix[1][3]=y;
-        matrix[2][3]=z;
+        matrix[3][0]=x;
+        matrix[3][1]=y;
+        matrix[3][2]=z;
         
         return matrix;
     }

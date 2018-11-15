@@ -15,6 +15,9 @@ import java.awt.Font;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import static java.awt.event.ItemEvent.SELECTED;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -56,6 +59,9 @@ import org.yourorghere.figuras.Quadrilatero;
 import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
+import org.yourorghere.transforms.Escala;
+import org.yourorghere.transforms.TransformStack;
+import org.yourorghere.transforms.*;
 
 /**
  *
@@ -140,31 +146,37 @@ public class Paint extends JFrame {
         fileTextobj = new JTextField();
         jPanel2 = new JPanel();
         jPanel3 = new JPanel();
-        jButton2 = new JButton();
-        jTextField2 = new JTextField();
-        jTextField3 = new JTextField();
-        jTextField4 = new JTextField();
+        translateBtn = new JButton();
+        translateZ = new JTextField();
+        translateY = new JTextField();
+        translateX = new JTextField();
         jLabel2 = new JLabel();
         jPanel4 = new JPanel();
-        jButton3 = new JButton();
-        jTextField5 = new JTextField();
-        jTextField6 = new JTextField();
-        jTextField7 = new JTextField();
+        scaleBtn = new JButton();
+        scaleZ = new JTextField();
+        scaleY = new JTextField();
+        scaleX = new JTextField();
         jLabel3 = new JLabel();
         jPanel6 = new JPanel();
-        jButton5 = new JButton();
-        jTextField11 = new JTextField();
-        jTextField12 = new JTextField();
-        jTextField13 = new JTextField();
+        rotateBtn = new JButton();
+        rotateZ = new JTextField();
+        rotateY = new JTextField();
+        rotateX = new JTextField();
         jLabel5 = new JLabel();
         jPanel7 = new JPanel();
-        jButton6 = new JButton();
-        jTextField14 = new JTextField();
-        jTextField15 = new JTextField();
-        jTextField16 = new JTextField();
+        cisYBtn = new JButton();
+        cisX = new JTextField();
+        cisY = new JTextField();
+        cisZ = new JTextField();
         jLabel6 = new JLabel();
+        cisXBtn = new JButton();
+        cisZBtn = new JButton();
         jButton7 = new JButton();
         resetCambtn = new JButton();
+        jLabel4 = new JLabel();
+        xyGrid = new JCheckBox();
+        xzGrid = new JCheckBox();
+        yzGrid = new JCheckBox();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -237,7 +249,7 @@ public class Paint extends JFrame {
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(fileTextobj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -248,21 +260,26 @@ public class Paint extends JFrame {
                 .addContainerGap())
         );
 
-        jButton2.setText("adicionar");
-
-        jTextField2.setText("z");
-
-        jTextField3.setText("y");
-        jTextField3.addActionListener(new ActionListener() {
+        translateBtn.setText("adicionar");
+        translateBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                translateBtnActionPerformed(evt);
             }
         });
 
-        jTextField4.setText("x");
-        jTextField4.addActionListener(new ActionListener() {
+        translateZ.setText("z");
+
+        translateY.setText("y");
+        translateY.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                translateYActionPerformed(evt);
+            }
+        });
+
+        translateX.setText("x");
+        translateX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                translateXActionPerformed(evt);
             }
         });
 
@@ -276,94 +293,159 @@ public class Paint extends JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING, false)
                     .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField4, Alignment.LEADING)
-                    .addComponent(jTextField3, Alignment.LEADING)
-                    .addComponent(jTextField2, Alignment.LEADING))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(translateBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(translateX, Alignment.LEADING)
+                    .addComponent(translateY, Alignment.LEADING)
+                    .addComponent(translateZ, Alignment.LEADING))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(17, 17, 17))
+                .addComponent(translateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(translateY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(translateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(translateBtn)
+                .addGap(24, 24, 24))
         );
 
-        jButton3.setText("adicionar");
-
-        jTextField5.setText("z");
-
-        jTextField6.setText("y");
-        jTextField6.addActionListener(new ActionListener() {
+        scaleBtn.setText("adicionar");
+        scaleBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                scaleBtnActionPerformed(evt);
             }
         });
 
-        jTextField7.setText("x");
-        jTextField7.addActionListener(new ActionListener() {
+        scaleZ.setText("z");
+
+        scaleY.setText("y");
+        scaleY.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                scaleYActionPerformed(evt);
+            }
+        });
+
+        scaleX.setText("x");
+        scaleX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                scaleXActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Escala");
 
-        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(Alignment.TRAILING, false)
-                    .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField7, Alignment.LEADING)
-                    .addComponent(jTextField6, Alignment.LEADING)
-                    .addComponent(jTextField5, Alignment.LEADING))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(17, 17, 17))
-        );
-
-        jButton5.setText("adicionar");
-
-        jTextField11.setText("z");
-
-        jTextField12.setText("y");
-        jTextField12.addActionListener(new ActionListener() {
+        rotateBtn.setText("adicionar");
+        rotateBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField12ActionPerformed(evt);
+                rotateBtnActionPerformed(evt);
             }
         });
 
-        jTextField13.setText("x");
-        jTextField13.addActionListener(new ActionListener() {
+        rotateZ.setText("z");
+
+        rotateY.setText("y");
+        rotateY.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jTextField13ActionPerformed(evt);
+                rotateYActionPerformed(evt);
+            }
+        });
+
+        rotateX.setText("x");
+        rotateX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                rotateXActionPerformed(evt);
             }
         });
 
         jLabel5.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("RotaÃ§Ã£o");
+        jLabel5.setText("Rotação");
+
+        cisYBtn.setText("CisalharY");
+        cisYBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisYBtnActionPerformed(evt);
+            }
+        });
+
+        cisX.setText("x");
+        cisX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisXActionPerformed(evt);
+            }
+        });
+
+        cisY.setText("y");
+        cisY.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisYActionPerformed(evt);
+            }
+        });
+
+        cisZ.setText("z");
+
+        jLabel6.setText("Cisalhar");
+
+        cisXBtn.setText("CisalharX");
+        cisXBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisXBtnActionPerformed(evt);
+            }
+        });
+
+        cisZBtn.setText("CisalharZ");
+        cisZBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisZBtnActionPerformed(evt);
+            }
+        });
+
+        GroupLayout jPanel7Layout = new GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(cisXBtn))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(cisX, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cisZ, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(cisY, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cisYBtn))
+                    .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cisZBtn))))
+        );
+        jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisXBtn))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(cisX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(cisY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisYBtn))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(cisZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(cisZBtn)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -372,105 +454,121 @@ public class Paint extends JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(Alignment.TRAILING, false)
                     .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField13, Alignment.LEADING)
-                    .addComponent(jTextField12, Alignment.LEADING)
-                    .addComponent(jTextField11, Alignment.LEADING))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(rotateBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rotateX, Alignment.LEADING)
+                    .addComponent(rotateY, Alignment.LEADING)
+                    .addComponent(rotateZ, Alignment.LEADING))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField13, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField12, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField11, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(jButton5)
-                .addContainerGap())
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.TRAILING)
+                    .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(rotateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(rotateY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(rotateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(rotateBtn)))
+                .addGap(16, 16, 16))
         );
 
-        jButton6.setText("jButton6");
-
-        jTextField14.setText("x");
-        jTextField14.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jTextField14ActionPerformed(evt);
-            }
-        });
-
-        jTextField15.setText("y");
-        jTextField15.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jTextField15ActionPerformed(evt);
-            }
-        });
-
-        jTextField16.setText("z");
-
-        jLabel6.setText("Cisalhar");
-
-        GroupLayout jPanel7Layout = new GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(Alignment.TRAILING)
-                    .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField14, Alignment.LEADING)
-                    .addComponent(jTextField15, Alignment.LEADING)
-                    .addComponent(jTextField16, Alignment.LEADING)
-                    .addGroup(Alignment.LEADING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton6)
-                        .addGap(0, 17, Short.MAX_VALUE)))
+                .addGroup(jPanel4Layout.createParallelGroup(Alignment.TRAILING, false)
+                    .addComponent(scaleBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scaleX, Alignment.LEADING)
+                    .addComponent(scaleY, Alignment.LEADING)
+                    .addComponent(scaleZ, Alignment.LEADING)
+                    .addComponent(jLabel3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+        jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField14, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(scaleX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField15, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jTextField16, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jButton6)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(scaleY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(scaleZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(scaleBtn)
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
                 .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
-                    .addComponent(jPanel7, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton7.setText("Executar");
+        jButton7.setText("Limpar");
+        jButton7.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
-        resetCambtn.setText("DefaultCamera");
+        resetCambtn.setText("Reset Cenario");
         resetCambtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 resetCambtnActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Malha:");
+
+        xyGrid.setText("Plano XY");
+        xyGrid.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent evt) {
+                xyGridItemStateChanged(evt);
+            }
+        });
+        xyGrid.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                xyGridActionPerformed(evt);
+            }
+        });
+
+        xzGrid.setText("Plano XZ");
+        xzGrid.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent evt) {
+                xzGridItemStateChanged(evt);
+            }
+        });
+
+        yzGrid.setText("Plano YZ");
+        yzGrid.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent evt) {
+                yzGridItemStateChanged(evt);
             }
         });
 
@@ -478,20 +576,24 @@ public class Paint extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
+                        .addGap(90, 90, 90)
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7)))
+                            .addComponent(jButton7)
+                            .addComponent(jLabel4)
+                            .addComponent(xyGrid)
+                            .addComponent(xzGrid)
+                            .addComponent(yzGrid)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(resetCambtn))
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 463, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -500,17 +602,27 @@ public class Paint extends JFrame {
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 446, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jButton7)))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+                        .addComponent(jButton7)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(xyGrid)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(xzGrid)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(yzGrid)))
+                .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(resetCambtn)
                         .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(resetCambtn)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -531,37 +643,37 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fileTextmtlActionPerformed
 
-    private void jTextField3ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void translateYActionPerformed(ActionEvent evt) {//GEN-FIRST:event_translateYActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_translateYActionPerformed
 
-    private void jTextField4ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void translateXActionPerformed(ActionEvent evt) {//GEN-FIRST:event_translateXActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_translateXActionPerformed
 
-    private void jTextField6ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void scaleYActionPerformed(ActionEvent evt) {//GEN-FIRST:event_scaleYActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_scaleYActionPerformed
 
-    private void jTextField7ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void scaleXActionPerformed(ActionEvent evt) {//GEN-FIRST:event_scaleXActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_scaleXActionPerformed
 
-    private void jTextField12ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField12ActionPerformed
+    private void rotateYActionPerformed(ActionEvent evt) {//GEN-FIRST:event_rotateYActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField12ActionPerformed
+    }//GEN-LAST:event_rotateYActionPerformed
 
-    private void jTextField13ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+    private void rotateXActionPerformed(ActionEvent evt) {//GEN-FIRST:event_rotateXActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField13ActionPerformed
+    }//GEN-LAST:event_rotateXActionPerformed
 
-    private void jTextField14ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
+    private void cisXActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cisXActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField14ActionPerformed
+    }//GEN-LAST:event_cisXActionPerformed
 
-    private void jTextField15ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jTextField15ActionPerformed
+    private void cisYActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cisYActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField15ActionPerformed
+    }//GEN-LAST:event_cisYActionPerformed
 
     private void formKeyPressed(KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
 
@@ -571,7 +683,7 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
 
         if(evt.getKeyChar()=='W'||evt.getKeyChar()=='w'){
-            GLRenderer.moveCam(0.0f, -0.1f, 0f);
+            GLRenderer.moveCam(0.0f, -0.1f, 0.0f);
         }else if(evt.getKeyChar()=='S'||evt.getKeyChar()=='s'){
             GLRenderer.moveCam(0.0f, 0.1f, 0f);
         }else if(evt.getKeyChar()=='A'||evt.getKeyChar()=='a'){
@@ -591,6 +703,7 @@ public class Paint extends JFrame {
 
     private void resetCambtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_resetCambtnActionPerformed
        GLRenderer.resetCam();
+       TransformStack t= TransformStack.getInstance();
     }//GEN-LAST:event_resetCambtnActionPerformed
 
     private void canvasMouseDragged(MouseEvent evt) {//GEN-FIRST:event_canvasMouseDragged
@@ -635,6 +748,140 @@ public class Paint extends JFrame {
             Logger.getLogger(Paint.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void rotateBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_rotateBtnActionPerformed
+        // TODO add your handling code here:
+        TransformStack t= TransformStack.getInstance();
+        try{
+            int x= Integer.parseInt(rotateX.getText());
+            int y= Integer.parseInt(rotateY.getText());
+            int z= Integer.parseInt(rotateZ.getText());
+            if(x>0){
+                t.addTransform(new RotateX(x));
+                Listagem.add("Rotate(X,"+x+")");
+            }
+            if(y>0){
+                t.addTransform(new RotateY(y));
+                Listagem.add("Rotate(Y,"+y+")");
+            }
+            if(z>0){
+                t.addTransform(new RotateZ(z));
+                Listagem.add("Rotate(Z,"+z+")");
+            }            
+        }catch(NumberFormatException e){
+            System.out.println("input mal formado!");
+        }
+    }//GEN-LAST:event_rotateBtnActionPerformed
+
+    private void scaleBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_scaleBtnActionPerformed
+        // TODO add your handling code here:
+        TransformStack t= TransformStack.getInstance();
+        try{
+            int x= Integer.parseInt(scaleX.getText());
+            int y= Integer.parseInt(scaleY.getText());
+            int z= Integer.parseInt(scaleZ.getText());
+            t.addTransform(new Escala(x,y,z));
+            Listagem.add("Escala("+x+","+y+","+z+")");
+            
+        }catch(NumberFormatException e){
+            System.out.println("input mal formado!");
+        }
+    }//GEN-LAST:event_scaleBtnActionPerformed
+
+    private void translateBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_translateBtnActionPerformed
+        TransformStack t= TransformStack.getInstance();
+        try{
+            int x= Integer.parseInt(translateX.getText());
+            int y= Integer.parseInt(translateY.getText());
+            int z= Integer.parseInt(translateZ.getText());
+            t.addTransform(new Transladar(x,y,z));
+            Listagem.add("Translate("+x+","+y+","+z+")");
+            
+        }catch(NumberFormatException e){
+            System.out.println("input mal formado!");
+        }
+    }//GEN-LAST:event_translateBtnActionPerformed
+
+    private void cisXBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cisXBtnActionPerformed
+        // TODO add your handling code here:
+        TransformStack t= TransformStack.getInstance();
+        try{
+            int sy= Integer.parseInt(cisY.getText());
+            int sz= Integer.parseInt(cisZ.getText());
+            t.addTransform(new CisalharX(sy,sz));
+            Listagem.add("Cisalhar(X,"+sy+","+sz+")");
+            
+        }catch(NumberFormatException e){
+            System.out.println("input mal formado!");
+        }
+    }//GEN-LAST:event_cisXBtnActionPerformed
+
+    private void cisYBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cisYBtnActionPerformed
+        // TODO add your handling code here:
+        TransformStack t= TransformStack.getInstance();
+        try{
+            int sx= Integer.parseInt(cisX.getText());
+            int sz= Integer.parseInt(cisZ.getText());
+            t.addTransform(new CisalharY(sx,sz));
+            Listagem.add("Cisalhar(Y,"+sx+","+sz+")");
+            
+        }catch(NumberFormatException e){
+            System.out.println("input mal formado!");
+        }        
+    }//GEN-LAST:event_cisYBtnActionPerformed
+
+    private void cisZBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cisZBtnActionPerformed
+        // TODO add your handling code here:
+        TransformStack t= TransformStack.getInstance();
+        try{
+            int sx= Integer.parseInt(cisX.getText());
+            int sy= Integer.parseInt(cisY.getText());
+            t.addTransform(new CisalharZ(sx,sy));
+            Listagem.add("Cisalhar(Z,"+sx+","+sy+")");
+            
+        }catch(NumberFormatException e){
+            System.out.println("input mal formado!");
+        }
+    }//GEN-LAST:event_cisZBtnActionPerformed
+
+    private void jButton7ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        GLRenderer.TransformOn(true);
+        Listagem.removeAll();
+        TransformStack t = TransformStack.getInstance();
+        t.clearStack();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void xyGridActionPerformed(ActionEvent evt) {//GEN-FIRST:event_xyGridActionPerformed
+
+    }//GEN-LAST:event_xyGridActionPerformed
+
+    private void xyGridItemStateChanged(ItemEvent evt) {//GEN-FIRST:event_xyGridItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            GLRenderer.OpenGridXY();
+        }else{
+            GLRenderer.CloseGridXY();
+        }
+    }//GEN-LAST:event_xyGridItemStateChanged
+
+    private void xzGridItemStateChanged(ItemEvent evt) {//GEN-FIRST:event_xzGridItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            GLRenderer.OpenGridXZ();
+        }else{
+            GLRenderer.CloseGridXZ();
+        }
+    }//GEN-LAST:event_xzGridItemStateChanged
+
+    private void yzGridItemStateChanged(ItemEvent evt) {//GEN-FIRST:event_yzGridItemStateChanged
+        // TODO add your handling code here:
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            GLRenderer.OpenGridZY();
+        }else{
+            GLRenderer.CloseGridZY();
+        }
+    }//GEN-LAST:event_yzGridItemStateChanged
 
     
     
@@ -682,17 +929,20 @@ public class Paint extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private List Listagem;
     private GLCanvas canvas;
+    private JTextField cisX;
+    private JButton cisXBtn;
+    private JTextField cisY;
+    private JButton cisYBtn;
+    private JTextField cisZ;
+    private JButton cisZBtn;
     private JTextField fileTextmtl;
     private JTextField fileTextobj;
     private JButton jButton1;
-    private JButton jButton2;
-    private JButton jButton3;
-    private JButton jButton5;
-    private JButton jButton6;
     private JButton jButton7;
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel3;
+    private JLabel jLabel4;
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JPanel jPanel1;
@@ -701,20 +951,23 @@ public class Paint extends JFrame {
     private JPanel jPanel4;
     private JPanel jPanel6;
     private JPanel jPanel7;
-    private JTextField jTextField11;
-    private JTextField jTextField12;
-    private JTextField jTextField13;
-    private JTextField jTextField14;
-    private JTextField jTextField15;
-    private JTextField jTextField16;
-    private JTextField jTextField2;
-    private JTextField jTextField3;
-    private JTextField jTextField4;
-    private JTextField jTextField5;
-    private JTextField jTextField6;
-    private JTextField jTextField7;
     private JToggleButton jToggleButton1;
     private List list1;
     private JButton resetCambtn;
+    private JButton rotateBtn;
+    private JTextField rotateX;
+    private JTextField rotateY;
+    private JTextField rotateZ;
+    private JButton scaleBtn;
+    private JTextField scaleX;
+    private JTextField scaleY;
+    private JTextField scaleZ;
+    private JButton translateBtn;
+    private JTextField translateX;
+    private JTextField translateY;
+    private JTextField translateZ;
+    private JCheckBox xyGrid;
+    private JCheckBox xzGrid;
+    private JCheckBox yzGrid;
     // End of variables declaration//GEN-END:variables
 }

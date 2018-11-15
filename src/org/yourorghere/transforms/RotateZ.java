@@ -21,8 +21,8 @@ public class RotateZ extends Rotacao{
     @Override
     public float[][] doTransform() {
         matrix[0][0]= (float) cos(super.getAngle());
-        matrix[0][1]=(float )-sin(super.getAngle());
-        matrix[1][0]=(float) sin(super.getAngle());
+        matrix[0][1]=(float)sin(super.getAngle());
+        matrix[1][0]=(float) -sin(super.getAngle());
         matrix[1][1]=(float) cos(super.getAngle());
         
         return matrix;

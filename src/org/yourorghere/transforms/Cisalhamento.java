@@ -11,21 +11,9 @@ import javax.media.opengl.GL;
  *
  * @author lucas
  */
-public  class Cisalhamento extends Transform {
+public abstract class Cisalhamento extends Transform {
     
-    protected float x,y,z;
-    
-    
-    public Cisalhamento(float X,float Y,float Z){
-        x=X;
-        y=Y;
-        z=Z;
-    }
 
-    @Override
-    public float[][] doTransform(){
-        
-        return matrix;
-    }
+    public abstract float[][] doTransform();
     
 }

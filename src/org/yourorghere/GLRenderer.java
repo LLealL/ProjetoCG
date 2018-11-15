@@ -22,19 +22,26 @@ import org.yourorghere.figuras.Triangulo;
 import org.yourorghere.figuras.Util.ModelLoaderOBJ;
 import org.yourorghere.figuras.Util.RGB;
 import org.yourorghere.figuras.persistence.BancoFiguras;
+import org.yourorghere.transforms.TransformStack;
 
 
 public class GLRenderer implements GLEventListener{
     
-    private static GL glstatic;
+
     private Texture tex=null;
     private GLModel model=null;
-    private GLModel newmodel=null;
+    private GLModel phantom=null;
     private float rquad=0.0f;
-    private static boolean gridActivated=false;
-    private static float tamanhoGrid=0.1f; 
+    private static boolean XYActivated=false;
+    private static boolean XZActivated=false;
+    private static boolean ZYActivated=false;
+
     private BancoFiguras figuras;
+    
+    
+    private static boolean transformActivated=false;
     private static float x=0f,y=0f,z=0f;
+    private static TransformStack tstack;
     
     private static float xangle=0.0f,yangle=0.0f,zangle=0.0f;
     
@@ -43,15 +50,16 @@ public class GLRenderer implements GLEventListener{
         // drawable.setGL(new DebugGL(drawable.getGL()));
 
         GL gl = drawable.getGL();
-        glstatic= gl;
+
         System.err.println("INIT GL IS: " + gl.getClass().getName());
         
+        tstack= TransformStack.getInstance();
         // Enable VSync
         gl.setSwapInterval(1);
 
   
         try {
-            if(false==loadModels(gl,"./models/Cilindro.obj","./models/Cilindro.mtl")){
+            if(false==loadModels(gl,"./models/CubeGlass.obj","./models/CubeGlass.mtl")){
                 System.exit(1);
             }
              setLight(gl);
@@ -101,8 +109,8 @@ public class GLRenderer implements GLEventListener{
 
         
 	gl.glClear (GL.GL_COLOR_BUFFER_BIT|GL.GL_DEPTH_BUFFER_BIT);
-	gl.glLoadIdentity();
-        gl.glTranslatef(0f+x, 0f+y, -1+z);
+        gl.glLoadIdentity();
+        gl.glTranslatef(0f+x, 0f+y, -4+z);
 
         gl.glRotatef(xangle,1,0,0);
         gl.glRotatef(yangle,0,1,0);
@@ -113,64 +121,110 @@ public class GLRenderer implements GLEventListener{
         
 
         gl.glEnable(GL.GL_LIGHTING);
-       // gl.glRotatef(rquad,1f,1f,1f);
-       if(model!=null){
-       model.opengldraw(gl);
-       }
-       if(newmodel!=null){
-           newmodel.opengldraw(gl);
-          
-       }
 
+
+          gl.glPushMatrix();
+          
+          applyTransforms(gl);
+          model.opengldraw(gl);          
+          gl.glPopMatrix();
+       
         
-        
-        rquad-=0.30f;
-        
+           transformActivated=false;        
         gl.glFlush ();	   
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
     
+    public static void TransformOn(boolean f){
+        transformActivated=f;
+    }
+    
+    public void applyTransforms(GL gl){
+        float[] transform=new float[16];     
+        float[][] m={
+            {1f,0f,0f,0f},
+            {0f,1f,0f,0f},
+            {0f,0f,1f,0f},
+            {0f,0f,0f,1f}
+        };
+            m = tstack.makeTransformMatrix();  
+
+      //  System.out.println(m[0][3]);
+        
+      //  System.out.println(m[2][3]);
+       // gl.glMatrixMode(GL.GL_MATRIX_MODE);
+        
+        
+        
+        transform[0]=m[0][0];
+        transform[1]=m[0][1];
+        transform[2]=m[0][2];
+        transform[3]=m[0][3];
+
+        transform[4]=m[1][0];
+        transform[5]=m[1][1];
+        transform[6]=m[1][2];
+        transform[7]=m[1][3];
+
+        transform[8]=m[2][0];
+        transform[9]=m[2][1];
+        transform[10]=m[2][2];
+        transform[11]=m[2][3];
+
+        transform[12]=m[3][0];
+        transform[13]=m[3][1];
+        transform[14]=m[3][2];
+        transform[15]=m[3][3];        
+
+        
+     //  System.out.println(transform[11]);
+      //  FloatBuffer fbuffer = FloatBuffer.wrap(transform);
+        
+        
+        gl.glMultMatrixf(transform, 0);
+        
+       // gl.glPushMatrix();
+      // tstack.clearStack();
+      //gl.glMultMatrixf(fbuffer);
+
+       // gl.glMatrixMode(GL.GL_MODELVIEW);
+        
+       
+    }
+
     public void clear(){
         figuras=null;
     }    
     
-    public static void OpenGrid(float tamanho){
-        gridActivated = true;
-        tamanhoGrid=tamanho;
+    public static void OpenGridXY(){
+        XYActivated = true;
     }
     
-    public static void CloseGrid(){
-        gridActivated = false;
+    public static void CloseGridXY(){
+        XYActivated = false;
+    }    
+    public static void OpenGridXZ(){
+        XZActivated = true;
     }
     
-    public void drawGrid(GL gl, float tamanho){
-        
-        gl.glBegin(gl.GL_LINES);
-        gl.glColor3f(1.0f,1.0f,1.0f); 
-        for(float x = 0.0f; x < 275.0f; x += tamanho )
-        {
-            gl.glVertex3f(x, -200.0f, 0.0f);
-            gl.glVertex3f(x, 200.0f, 0.0f);
-            gl.glVertex3f(-1*x,-200.0f,0.0f );
-            gl.glVertex3f(-1*x,200.0f,0.0f );
-        }
-        for(float y = 0; y < 200.0f; y += tamanho )
-        {
-            gl.glVertex3f(-275.0f, y, 0.0f);
-            gl.glVertex3f(275.0f, y, 0.0f);
-            gl.glVertex3f(-275.0f, -1*y, 0.0f);
-            gl.glVertex3f(275.0f, -1*y, 0.0f);
-        }
-        gl.glEnd();
+    public static void CloseGridXZ(){
+        XZActivated = false;
+    }    
+        public static void OpenGridZY(){
+        ZYActivated = true;
     }
-
+    
+    public static void CloseGridZY(){
+        ZYActivated = false;
+    }    
 
     public boolean loadModels(GL gl,String obj,String mtl) throws GLException, IOException {
             model = ModelLoaderOBJ.LoadModel(obj,
 				mtl, gl);
 
+            phantom = model;
 		if (model == null) {
 			return false;
 		}
@@ -228,7 +282,7 @@ public class GLRenderer implements GLEventListener{
         }
         
         private void renderWorld(GL gl){
-        float x=0.0f,z=0.0f;
+        float x=0.0f,y=0.0f,z=0.0f;
             
         gl.glRotatef(15.0f, 1.0f, 0.0f, 0.0f);
         gl.glRotatef(-45.0f, 0.0f, 1.0f, 0.0f);
@@ -236,34 +290,84 @@ public class GLRenderer implements GLEventListener{
         gl.glDisable(GL.GL_LIGHTING);
         gl.glLineWidth(1);
         gl.glColor3f(0.2f, 0.2f, 0.2f);
+        if(XZActivated){
+            gl.glBegin(GL.GL_LINES);
+            for(x=-1000;x<1000;x+=1F){
+                if(x==0){               
+                    continue;
+                }
+             gl.glVertex3f(x, 0.0f, -1000.0f);
+             gl.glVertex3f(x, 0.0f, 1000.0f);
+            }
+            for(z=-1000;z<1000;z+=1F){
+                if(z==0){
+                    continue;
+                }
+             gl.glVertex3f(-1000.0f, 0.0f, z);
+             gl.glVertex3f(1000.0f, 0.0f, z);
+            }
+        }
+        if(XYActivated){
+            gl.glBegin(GL.GL_LINES);
+            for(x=-1000;x<1000;x+=1F){
+                if(x==0){               
+                    continue;
+                }
+             gl.glVertex3f(x, -1000.0f, 0.0f);
+             gl.glVertex3f(x, 1000.0f, 0.0f);
+            }
+            for(y=-1000;y<1000;y+=1F){
+                if(y==0){
+                    continue;
+                }
+             gl.glVertex3f(-1000.0f, y, 0.0f);
+             gl.glVertex3f(1000.0f, y, 0.0f);
+            }            
+        }
         
-        gl.glBegin(GL.GL_LINES);
-        for(x=-1000;x<1000;x+=1F){
-            if(x==0){
-                continue;
+       if(ZYActivated){
+            gl.glBegin(GL.GL_LINES);
+            for(y=-1000;y<1000;y+=1F){
+                if(y==0){               
+                    continue;
+                }
+             gl.glVertex3f(0.0f, y, -1000.0f);
+             gl.glVertex3f(0.0f, y, 1000.0f);
             }
-         gl.glVertex3f(x, 0.0f, -1000.0f);
-         gl.glVertex3f(x, 0.0f, 1000.0f);
-        }
-        for(z=-1000;z<1000;z+=1F){
-            if(z==0){
-                continue;
+            for(z=-1000;z<1000;z+=1F){
+                if(z==0){
+                    continue;
+                }
+             gl.glVertex3f(0.0f, -1000.0f, z);
+             gl.glVertex3f(0.0f, 1000.0f, z);
             }
-         gl.glVertex3f(-1000.0f, 0.0f, z);
-         gl.glVertex3f(1000.0f, 0.0f, z);
-        }
+       }
         
         gl.glDisable(GL.GL_LIGHTING);
         gl.glLineWidth(1);
         gl.glColor3f(1.0f, 1.0f, 1.0f);
         gl.glBegin(GL.GL_LINES);
+        gl.glColor3f(0f, 1f, 1f);
          gl.glVertex3f(-1000.0f, 0.0f, 0.0f);
+         gl.glVertex3f(0.0f, 0.0f, 0.0f);
+         gl.glColor3f(1f,0f,0f);
+         gl.glVertex3f(0.0f, 0.0f, 0.0f);
          gl.glVertex3f(1000.0f, 0.0f, 0.0f);
+         
+         gl.glColor3f(1f,0f,1f);
          gl.glVertex3f(0.0f, -1000.0f, 0.0f);
+         gl.glVertex3f(0f, 0f, 0f);
+         gl.glColor3f(0f, 1f, 0f);
+         gl.glVertex3f(0f, 0f, 0f);
          gl.glVertex3f(0.0f, 1000.0f, 0.0f);
+         
+         
+         gl.glColor3f(1f,1f,0f);
          gl.glVertex3f(0.0f, 0.0f, -1000.0f);
-         gl.glVertex3f(0.0f, 0.0f, 1000.0f);   
-
+         gl.glVertex3f(0.0f, 0.0f, 0.0f);   
+         gl.glColor3f(0f, 0f, 1f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 1000.0f);
         gl.glEnd();
         }
 
