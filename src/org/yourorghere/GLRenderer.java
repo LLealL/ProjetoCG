@@ -27,7 +27,9 @@ import org.yourorghere.transforms.TransformStack;
 
 public class GLRenderer implements GLEventListener{
     
-
+    private static boolean modelChangeState=false;
+    private float[] transformedMatrix={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1}; 
+    private static float[] IdMatrix={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
     private Texture tex=null;
     private GLModel model=null;
     private GLModel phantom=null;
@@ -35,6 +37,7 @@ public class GLRenderer implements GLEventListener{
     private static boolean XYActivated=false;
     private static boolean XZActivated=false;
     private static boolean ZYActivated=false;
+    private static FloatBuffer f;
 
     private BancoFiguras figuras;
     
@@ -56,7 +59,7 @@ public class GLRenderer implements GLEventListener{
         tstack= TransformStack.getInstance();
         // Enable VSync
         gl.setSwapInterval(1);
-
+        f = FloatBuffer.wrap(transformedMatrix);
   
         try {
             if(false==loadModels(gl,"./models/CubeGlass.obj","./models/CubeGlass.mtl")){
@@ -93,7 +96,8 @@ public class GLRenderer implements GLEventListener{
         }
         final float h= (float) width/(float)height;
     	gl.glViewport(0, 0, width, height); 
-        
+
+
         gl.glMatrixMode (GL.GL_PROJECTION);
         gl.glLoadIdentity ();
         glu.gluPerspective(45.0f, h, 0.01f, 200f);
@@ -108,29 +112,42 @@ public class GLRenderer implements GLEventListener{
 
 
         
-	gl.glClear (GL.GL_COLOR_BUFFER_BIT|GL.GL_DEPTH_BUFFER_BIT);
+	gl.glClear (GL.GL_COLOR_BUFFER_BIT|GL.GL_DEPTH_BUFFER_BIT);      
         gl.glLoadIdentity();
         gl.glTranslatef(0f+x, 0f+y, -4+z);
-
+        
         gl.glRotatef(xangle,1,0,0);
         gl.glRotatef(yangle,0,1,0);
         gl.glRotatef(zangle,0,0,1);
-        
+
         
         renderWorld(gl);
         
 
         gl.glEnable(GL.GL_LIGHTING);
 
+        if(!modelChangeState){
 
-          gl.glPushMatrix();
-          
-          applyTransforms(gl);
-          model.opengldraw(gl);          
+            gl.glPushMatrix();
+            gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
+            gl.glLoadMatrixf(f);
+            applyTransforms(gl);
+            model.opengldraw(gl);  
+            gl.glPopMatrix();
+     
+
+
+          gl.glPushMatrix();  
+            if(transformActivated){       
+              applyTransforms(gl);
+
+            }
+            //gl.glMultMatrixf(f);
+            model.opengldraw(gl);
           gl.glPopMatrix();
-       
-        
-           transformActivated=false;        
+
+        }
+        transformActivated=false;
         gl.glFlush ();	   
     }
 
@@ -149,7 +166,7 @@ public class GLRenderer implements GLEventListener{
             {0f,0f,1f,0f},
             {0f,0f,0f,1f}
         };
-            m = tstack.makeTransformMatrix();  
+            m = tstack.makeTransformMatrix(gl);  
 
       //  System.out.println(m[0][3]);
         
@@ -224,7 +241,7 @@ public class GLRenderer implements GLEventListener{
             model = ModelLoaderOBJ.LoadModel(obj,
 				mtl, gl);
 
-            phantom = model;
+
 		if (model == null) {
 			return false;
 		}
@@ -236,7 +253,7 @@ public class GLRenderer implements GLEventListener{
 		gl.glEnable(GL.GL_LIGHTING);
 		
 		float SHINE_ALL_DIRECTIONS = 5;
-		float[] lightPos = { -15, 15, 15, SHINE_ALL_DIRECTIONS };
+		float[] lightPos = { -15, 0, 0, SHINE_ALL_DIRECTIONS };
 		float[] lightColorAmbient = { 0.5f, 0.5f, 0.5f, 1f };
 		float[] lightColorSpecular = { 0.9f, 0.9f, 0.9f, 1f };
                 float[] espec ={1f,1f,1f,1f};
@@ -256,7 +273,9 @@ public class GLRenderer implements GLEventListener{
                 gl.glEnable(GL.GL_COLOR_MATERIAL);
                 gl.glEnable(GL.GL_NORMALIZE);
                 gl.glEnable(GL.GL_DEPTH_TEST);
-		
+
+
+                
 	}
     
         public static void moveCam(float i,float u, float p ){
@@ -273,6 +292,9 @@ public class GLRenderer implements GLEventListener{
             xangle=0f;
             yangle=0f;
             zangle=0f;
+            
+            f=FloatBuffer.wrap(IdMatrix);
+            
         }
         
         public static void rotateCam(float i,float u , float p){
@@ -377,7 +399,6 @@ public class GLRenderer implements GLEventListener{
                     
                     model= ModelLoaderOBJ.LoadModel(s,
 				m, gl);
-
                     if (model == null) {
                             return false;
                     }
@@ -387,6 +408,10 @@ public class GLRenderer implements GLEventListener{
                     Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 return false;
+        }
+        
+        public static void changeModel(boolean b){
+            modelChangeState=b;
         }
     
 }

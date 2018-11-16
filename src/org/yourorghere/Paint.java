@@ -634,9 +634,7 @@ public class Paint extends JFrame {
 
     private void ListagemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ListagemActionPerformed
         // TODO add your handling code here:
-        int a= Listagem.getSelectedIndex();
-        a++;
-        System.out.println(BancoFiguras.getInstance().getFigura(a).getClass().getSimpleName());
+
     }//GEN-LAST:event_ListagemActionPerformed
 
     private void fileTextmtlActionPerformed(ActionEvent evt) {//GEN-FIRST:event_fileTextmtlActionPerformed
@@ -739,10 +737,11 @@ public class Paint extends JFrame {
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-
-          //  renderer.loadNewModel(canvas.getGL(),fileTextobj.getText().toString(), fileTextmtl.getText().toString());
+            GLRenderer.changeModel(true);
+            renderer.loadNewModel(canvas.getGL(),fileTextobj.getText().toString(), fileTextmtl.getText().toString());
             System.out.println(fileTextmtl.getText());
             System.out.println(fileTextobj.getText());
+            GLRenderer.changeModel(false);
 
         } catch (GLException ex) {
             Logger.getLogger(Paint.class.getName()).log(Level.SEVERE, null, ex);
@@ -753,9 +752,9 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
         TransformStack t= TransformStack.getInstance();
         try{
-            int x= Integer.parseInt(rotateX.getText());
-            int y= Integer.parseInt(rotateY.getText());
-            int z= Integer.parseInt(rotateZ.getText());
+            float x= Float.parseFloat(rotateX.getText());
+            float y= Float.parseFloat(rotateY.getText());
+            float z= Float.parseFloat(rotateZ.getText());
             if(x>0){
                 t.addTransform(new RotateX(x));
                 Listagem.add("Rotate(X,"+x+")");
@@ -777,9 +776,9 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
         TransformStack t= TransformStack.getInstance();
         try{
-            int x= Integer.parseInt(scaleX.getText());
-            int y= Integer.parseInt(scaleY.getText());
-            int z= Integer.parseInt(scaleZ.getText());
+            float x= Float.parseFloat(scaleX.getText());
+            float y= Float.parseFloat(scaleY.getText());
+            float z= Float.parseFloat(scaleZ.getText());
             t.addTransform(new Escala(x,y,z));
             Listagem.add("Escala("+x+","+y+","+z+")");
             
@@ -791,9 +790,9 @@ public class Paint extends JFrame {
     private void translateBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_translateBtnActionPerformed
         TransformStack t= TransformStack.getInstance();
         try{
-            int x= Integer.parseInt(translateX.getText());
-            int y= Integer.parseInt(translateY.getText());
-            int z= Integer.parseInt(translateZ.getText());
+            float x= Float.parseFloat(translateX.getText());
+            float y= Float.parseFloat(translateY.getText());
+            float z= Float.parseFloat(translateZ.getText());
             t.addTransform(new Transladar(x,y,z));
             Listagem.add("Translate("+x+","+y+","+z+")");
             
@@ -806,8 +805,8 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
         TransformStack t= TransformStack.getInstance();
         try{
-            int sy= Integer.parseInt(cisY.getText());
-            int sz= Integer.parseInt(cisZ.getText());
+            float sy= Float.parseFloat(cisY.getText());
+            float sz= Float.parseFloat(cisZ.getText());
             t.addTransform(new CisalharX(sy,sz));
             Listagem.add("Cisalhar(X,"+sy+","+sz+")");
             
@@ -820,8 +819,8 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
         TransformStack t= TransformStack.getInstance();
         try{
-            int sx= Integer.parseInt(cisX.getText());
-            int sz= Integer.parseInt(cisZ.getText());
+            float sx= Float.parseFloat(cisX.getText());
+            float sz= Float.parseFloat(cisZ.getText());
             t.addTransform(new CisalharY(sx,sz));
             Listagem.add("Cisalhar(Y,"+sx+","+sz+")");
             
@@ -834,8 +833,8 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
         TransformStack t= TransformStack.getInstance();
         try{
-            int sx= Integer.parseInt(cisX.getText());
-            int sy= Integer.parseInt(cisY.getText());
+            Float sx= Float.parseFloat(cisX.getText());
+            Float sy= Float.parseFloat(cisY.getText());
             t.addTransform(new CisalharZ(sx,sy));
             Listagem.add("Cisalhar(Z,"+sx+","+sy+")");
             
@@ -850,6 +849,8 @@ public class Paint extends JFrame {
         Listagem.removeAll();
         TransformStack t = TransformStack.getInstance();
         t.clearStack();
+      //  GLRenderer.TransformOn(false);
+       
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void xyGridActionPerformed(ActionEvent evt) {//GEN-FIRST:event_xyGridActionPerformed
