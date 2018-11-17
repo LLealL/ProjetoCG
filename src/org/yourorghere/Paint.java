@@ -7,6 +7,7 @@
 package org.yourorghere;
 
 import com.sun.opengl.util.Animator;
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -177,6 +178,7 @@ public class Paint extends JFrame {
         xyGrid = new JCheckBox();
         xzGrid = new JCheckBox();
         yzGrid = new JCheckBox();
+        fantasma = new Checkbox();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -249,9 +251,9 @@ public class Paint extends JFrame {
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
                 .addComponent(fileTextobj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(fileTextmtl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -301,7 +303,7 @@ public class Paint extends JFrame {
         );
         jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(translateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -444,7 +446,7 @@ public class Paint extends JFrame {
                 .addComponent(cisZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(cisZBtn)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
@@ -463,11 +465,10 @@ public class Paint extends JFrame {
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(Alignment.TRAILING)
-                    .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(ComponentPlacement.RELATED)
                         .addComponent(rotateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -476,8 +477,11 @@ public class Paint extends JFrame {
                         .addPreferredGap(ComponentPlacement.UNRELATED)
                         .addComponent(rotateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(rotateBtn)))
-                .addGap(16, 16, 16))
+                        .addComponent(rotateBtn)
+                        .addGap(30, 30, 30))
+                    .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
@@ -492,8 +496,8 @@ public class Paint extends JFrame {
                     .addComponent(scaleZ, Alignment.LEADING)
                     .addComponent(jLabel3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -507,7 +511,7 @@ public class Paint extends JFrame {
                 .addComponent(scaleZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(scaleBtn)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -522,12 +526,12 @@ public class Paint extends JFrame {
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
-                    .addComponent(jPanel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+                    .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jButton7.setText("Limpar");
@@ -572,11 +576,20 @@ public class Paint extends JFrame {
             }
         });
 
+        fantasma.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        fantasma.setFont(new Font("Tahoma", 0, 13)); // NOI18N
+        fantasma.setLabel("Fantasma");
+        fantasma.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent evt) {
+                fantasmaItemStateChanged(evt);
+            }
+        });
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
@@ -587,7 +600,8 @@ public class Paint extends JFrame {
                             .addComponent(jLabel4)
                             .addComponent(xyGrid)
                             .addComponent(xzGrid)
-                            .addComponent(yzGrid)))
+                            .addComponent(yzGrid)
+                            .addComponent(fantasma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -613,15 +627,15 @@ public class Paint extends JFrame {
                         .addComponent(xzGrid)
                         .addPreferredGap(ComponentPlacement.RELATED)
                         .addComponent(yzGrid)))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(fantasma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(resetCambtn)
                         .addPreferredGap(ComponentPlacement.RELATED)
                         .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -884,6 +898,14 @@ public class Paint extends JFrame {
         }
     }//GEN-LAST:event_yzGridItemStateChanged
 
+    private void fantasmaItemStateChanged(ItemEvent evt) {//GEN-FIRST:event_fantasmaItemStateChanged
+        if(evt.getStateChange()==ItemEvent.SELECTED){
+            GLRenderer.criarFantasma();
+        }else{
+            GLRenderer.desativarFantasma();
+        }
+    }//GEN-LAST:event_fantasmaItemStateChanged
+
     
     
     
@@ -936,6 +958,7 @@ public class Paint extends JFrame {
     private JButton cisYBtn;
     private JTextField cisZ;
     private JButton cisZBtn;
+    private Checkbox fantasma;
     private JTextField fileTextmtl;
     private JTextField fileTextobj;
     private JButton jButton1;

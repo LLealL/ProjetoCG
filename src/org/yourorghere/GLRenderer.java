@@ -10,6 +10,8 @@ import java.nio.FloatBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GL;
+import static javax.media.opengl.GL.GL_ONE_MINUS_SRC_ALPHA;
+import static javax.media.opengl.GL.GL_SRC_ALPHA;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLException;
@@ -41,7 +43,7 @@ public class GLRenderer implements GLEventListener{
 
     private BancoFiguras figuras;
     
-    
+    private static boolean fantasma = false;
     private static boolean transformActivated=false;
     private static float x=0f,y=0f,z=0f;
     private static TransformStack tstack;
@@ -111,7 +113,6 @@ public class GLRenderer implements GLEventListener{
 	GL gl = drawable.getGL();
 
 
-        
 	gl.glClear (GL.GL_COLOR_BUFFER_BIT|GL.GL_DEPTH_BUFFER_BIT);      
         gl.glLoadIdentity();
         gl.glTranslatef(0f+x, 0f+y, -4+z);
@@ -125,26 +126,34 @@ public class GLRenderer implements GLEventListener{
         
 
         gl.glEnable(GL.GL_LIGHTING);
-
+    
         if(!modelChangeState){
 
             gl.glPushMatrix();
             gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
             gl.glLoadMatrixf(f);
             applyTransforms(gl);
-            model.opengldraw(gl);  
+            
+            model.opengldraw(gl);
             gl.glPopMatrix();
      
 
 
-          gl.glPushMatrix();  
-            if(transformActivated){       
-              applyTransforms(gl);
-
+            gl.glPushMatrix();  
+            if(transformActivated){
+                applyTransforms(gl);
+                
             }
             //gl.glMultMatrixf(f);
-            model.opengldraw(gl);
-          gl.glPopMatrix();
+            if(fantasma){
+                gl.glEnable(GL.GL_BLEND);
+                gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                model.opengldraw(gl);
+                gl.glPopMatrix();
+            }
+          
+            
+            
 
         }
         transformActivated=false;
@@ -156,6 +165,14 @@ public class GLRenderer implements GLEventListener{
     
     public static void TransformOn(boolean f){
         transformActivated=f;
+    }
+   
+    public static void criarFantasma(){
+        fantasma = true;
+    }
+    
+      public static void desativarFantasma(){
+        fantasma = false;
     }
     
     public void applyTransforms(GL gl){
@@ -211,6 +228,8 @@ public class GLRenderer implements GLEventListener{
        
     }
 
+  
+    
     public void clear(){
         figuras=null;
     }    
