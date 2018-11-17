@@ -714,8 +714,9 @@ public class Paint extends JFrame {
     }//GEN-LAST:event_canvasMouseWheelMoved
 
     private void resetCambtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_resetCambtnActionPerformed
-       GLRenderer.resetCam();
+       renderer.resetCam();
        TransformStack t= TransformStack.getInstance();
+       t.clearStack();
     }//GEN-LAST:event_resetCambtnActionPerformed
 
     private void canvasMouseDragged(MouseEvent evt) {//GEN-FIRST:event_canvasMouseDragged
@@ -862,8 +863,7 @@ public class Paint extends JFrame {
         GLRenderer.TransformOn(true);
         Listagem.removeAll();
         TransformStack t = TransformStack.getInstance();
-        t.clearStack();
-      //  GLRenderer.TransformOn(false);
+        renderer.newTransformState();
        
     }//GEN-LAST:event_jButton7ActionPerformed
 

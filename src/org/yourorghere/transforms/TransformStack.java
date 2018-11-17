@@ -37,7 +37,7 @@ public class TransformStack {
         System.out.println("adicionou");
     }
     
-    public float[][] makeTransformMatrix(GL gl){
+    public float[][] makeTransformMatrix(GL gl,int i){
         float[][] matrix={
             {1f,0f,0f,0f},
             {0f,1f,0f,0f},
@@ -45,41 +45,44 @@ public class TransformStack {
             {0f,0f,0f,1f}
         };
         float[][] m;
+        int j=0;
         
         for(Transform t: pilha){
-            if(t instanceof Cisalhamento || t instanceof Transladar || t instanceof Escala ){         
-            m=t.doTransform();
-            
-            matrix[0][0]= matrix[0][0]*m[0][0]+matrix[0][1]*m[1][0]+matrix[0][2]*m[2][0]+matrix[0][3]*m[3][0];
-            matrix[0][1]=matrix[0][0]*m[0][1]+matrix[0][1]*m[1][1]+matrix[0][2]*m[2][1]+matrix[0][3]*m[3][1];
-            matrix[0][2]=matrix[0][0]*m[0][2]+matrix[0][1]*m[1][2]+matrix[0][2]*m[2][2]+matrix[0][3]*m[3][2];
-            matrix[0][3]=matrix[0][0]*m[0][3]+matrix[0][1]*m[1][3]+matrix[0][2]*m[2][3]+matrix[0][3]*m[3][3];
-            
-            matrix[1][0]= matrix[1][0]*m[0][0]+matrix[1][1]*m[1][0]+matrix[1][2]*m[2][0]+matrix[1][3]*m[3][0];
-            matrix[1][1]=matrix[1][0]*m[0][1]+matrix[1][1]*m[1][1]+matrix[1][2]*m[2][1]+matrix[1][3]*m[3][1];
-            matrix[1][2]=matrix[1][0]*m[0][2]+matrix[1][1]*m[1][2]+matrix[1][2]*m[2][2]+matrix[1][3]*m[3][2];
-            matrix[1][3]=matrix[1][0]*m[0][3]+matrix[1][1]*m[1][3]+matrix[1][2]*m[2][3]+matrix[1][3]*m[3][3];
-            
-            matrix[2][0]= matrix[2][0]*m[0][0]+matrix[2][1]*m[1][0]+matrix[2][2]*m[2][0]+matrix[2][3]*m[3][0];
-            matrix[2][1]=matrix[2][0]*m[0][1]+matrix[2][1]*m[1][1]+matrix[2][2]*m[2][1]+matrix[2][3]*m[3][1];
-            matrix[2][2]=matrix[2][0]*m[0][2]+matrix[2][1]*m[1][2]+matrix[2][2]*m[2][2]+matrix[2][3]*m[3][2];
-            matrix[2][3]=matrix[2][0]*m[0][3]+matrix[2][1]*m[1][3]+matrix[2][2]*m[2][3]+matrix[2][3]*m[3][3];
-            
-            matrix[3][0]= matrix[3][0]*m[0][0]+matrix[3][1]*m[1][0]+matrix[3][2]*m[2][0]+matrix[3][3]*m[3][0];
-            matrix[3][1]=matrix[3][0]*m[0][1]+matrix[3][1]*m[1][1]+matrix[3][2]*m[2][1]+matrix[3][3]*m[3][1];
-            matrix[3][2]=matrix[3][0]*m[0][2]+matrix[3][1]*m[1][2]+matrix[3][2]*m[2][2]+matrix[3][3]*m[3][2];
-            matrix[3][3]=matrix[3][0]*m[0][3]+matrix[3][1]*m[1][3]+matrix[3][2]*m[2][3]+matrix[3][3]*m[3][3];
-            
-            }else{
-                if(t instanceof RotateX){                    
-                    gl.glRotatef(((RotateX) t).getAngle(), 1f, 0f, 0f);
-                }else if( t instanceof RotateY){
-                    gl.glRotatef(((RotateY) t).getAngle(), 0f, 1f, 0f);
+            if(j<i){
+                if(t instanceof Cisalhamento || t instanceof Transladar || t instanceof Escala ){         
+                m=t.doTransform();
+
+                matrix[0][0]= matrix[0][0]*m[0][0]+matrix[0][1]*m[1][0]+matrix[0][2]*m[2][0]+matrix[0][3]*m[3][0];
+                matrix[0][1]=matrix[0][0]*m[0][1]+matrix[0][1]*m[1][1]+matrix[0][2]*m[2][1]+matrix[0][3]*m[3][1];
+                matrix[0][2]=matrix[0][0]*m[0][2]+matrix[0][1]*m[1][2]+matrix[0][2]*m[2][2]+matrix[0][3]*m[3][2];
+                matrix[0][3]=matrix[0][0]*m[0][3]+matrix[0][1]*m[1][3]+matrix[0][2]*m[2][3]+matrix[0][3]*m[3][3];
+
+                matrix[1][0]= matrix[1][0]*m[0][0]+matrix[1][1]*m[1][0]+matrix[1][2]*m[2][0]+matrix[1][3]*m[3][0];
+                matrix[1][1]=matrix[1][0]*m[0][1]+matrix[1][1]*m[1][1]+matrix[1][2]*m[2][1]+matrix[1][3]*m[3][1];
+                matrix[1][2]=matrix[1][0]*m[0][2]+matrix[1][1]*m[1][2]+matrix[1][2]*m[2][2]+matrix[1][3]*m[3][2];
+                matrix[1][3]=matrix[1][0]*m[0][3]+matrix[1][1]*m[1][3]+matrix[1][2]*m[2][3]+matrix[1][3]*m[3][3];
+
+                matrix[2][0]= matrix[2][0]*m[0][0]+matrix[2][1]*m[1][0]+matrix[2][2]*m[2][0]+matrix[2][3]*m[3][0];
+                matrix[2][1]=matrix[2][0]*m[0][1]+matrix[2][1]*m[1][1]+matrix[2][2]*m[2][1]+matrix[2][3]*m[3][1];
+                matrix[2][2]=matrix[2][0]*m[0][2]+matrix[2][1]*m[1][2]+matrix[2][2]*m[2][2]+matrix[2][3]*m[3][2];
+                matrix[2][3]=matrix[2][0]*m[0][3]+matrix[2][1]*m[1][3]+matrix[2][2]*m[2][3]+matrix[2][3]*m[3][3];
+
+                matrix[3][0]= matrix[3][0]*m[0][0]+matrix[3][1]*m[1][0]+matrix[3][2]*m[2][0]+matrix[3][3]*m[3][0];
+                matrix[3][1]=matrix[3][0]*m[0][1]+matrix[3][1]*m[1][1]+matrix[3][2]*m[2][1]+matrix[3][3]*m[3][1];
+                matrix[3][2]=matrix[3][0]*m[0][2]+matrix[3][1]*m[1][2]+matrix[3][2]*m[2][2]+matrix[3][3]*m[3][2];
+                matrix[3][3]=matrix[3][0]*m[0][3]+matrix[3][1]*m[1][3]+matrix[3][2]*m[2][3]+matrix[3][3]*m[3][3];
+
                 }else{
-                    gl.glRotatef(((RotateZ) t).getAngle(), 0f, 0f, 1f);
+                    if(t instanceof RotateX){                    
+                        gl.glRotatef(((RotateX) t).getAngle(), 1f, 0f, 0f);
+                    }else if( t instanceof RotateY){
+                        gl.glRotatef(((RotateY) t).getAngle(), 0f, 1f, 0f);
+                    }else{
+                        gl.glRotatef(((RotateZ) t).getAngle(), 0f, 0f, 1f);
+                    }
                 }
             }
-                
+            j++;
         }       
         System.out.println(matrix[0][0]+" "+ matrix[0][1]+ " "+ matrix[0][2]+" "+matrix[0][3]);
         System.out.println(matrix[1][0]+" "+ matrix[1][1]+ " "+ matrix[1][2]+" "+matrix[1][3]);
@@ -92,5 +95,8 @@ public class TransformStack {
         pilha.clear();
     }
     
+    public int stackSize(){
+        return pilha.size();
+    }
 
 }

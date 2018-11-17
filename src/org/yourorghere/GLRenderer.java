@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GL;
@@ -40,8 +41,9 @@ public class GLRenderer implements GLEventListener{
     private static boolean XZActivated=false;
     private static boolean ZYActivated=false;
     private static FloatBuffer f;
-
+    private int modelState=0;
     private BancoFiguras figuras;
+    private ArrayList<GLModel> models=null;
     
     private static boolean fantasma = false;
     private static boolean transformActivated=false;
@@ -63,8 +65,10 @@ public class GLRenderer implements GLEventListener{
         gl.setSwapInterval(1);
         f = FloatBuffer.wrap(transformedMatrix);
   
+        models=new ArrayList<GLModel>();
+        
         try {
-            if(false==loadModels(gl,"./models/CubeGlass.obj","./models/CubeGlass.mtl")){
+            if(false==loadModels(gl)){
                 System.exit(1);
             }
              setLight(gl);
@@ -132,20 +136,16 @@ public class GLRenderer implements GLEventListener{
             gl.glPushMatrix();
             gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
             gl.glLoadMatrixf(f);
-            applyTransforms(gl);
-            
+            applyTransforms(gl,modelState);
             model.opengldraw(gl);
             gl.glPopMatrix();
      
+            phantom.opengldraw(gl);
 
 
             gl.glPushMatrix();  
-            if(transformActivated){
-                applyTransforms(gl);
-                
-            }
-            //gl.glMultMatrixf(f);
             if(fantasma){
+                applyTransforms(gl,tstack.stackSize());
                 gl.glEnable(GL.GL_BLEND);
                 gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 model.opengldraw(gl);
@@ -175,7 +175,7 @@ public class GLRenderer implements GLEventListener{
         fantasma = false;
     }
     
-    public void applyTransforms(GL gl){
+    public void applyTransforms(GL gl, int i){
         float[] transform=new float[16];     
         float[][] m={
             {1f,0f,0f,0f},
@@ -183,7 +183,7 @@ public class GLRenderer implements GLEventListener{
             {0f,0f,1f,0f},
             {0f,0f,0f,1f}
         };
-            m = tstack.makeTransformMatrix(gl);  
+            m = tstack.makeTransformMatrix(gl,i);  
 
       //  System.out.println(m[0][3]);
         
@@ -256,12 +256,11 @@ public class GLRenderer implements GLEventListener{
         ZYActivated = false;
     }    
 
-    public boolean loadModels(GL gl,String obj,String mtl) throws GLException, IOException {
-            model = ModelLoaderOBJ.LoadModel(obj,
-				mtl, gl);
+    public boolean loadModels(GL gl) throws GLException, IOException {
+            model = ModelLoaderOBJ.LoadModel("./models/CubeGlass.obj","./models/CubeGlass.mtl", gl);
+            phantom = ModelLoaderOBJ.LoadModel("./models/Cilindro.obj","./models/Cilindro.mtl", gl);
 
-
-		if (model == null) {
+		if (model == null||phantom==null) {
 			return false;
 		}
 		return true;
@@ -304,7 +303,7 @@ public class GLRenderer implements GLEventListener{
                   
         }
         
-        public static void resetCam(){
+        public  void resetCam(){
             x=0f;
             y=0f;
             z=0f;
@@ -313,7 +312,7 @@ public class GLRenderer implements GLEventListener{
             zangle=0f;
             
             f=FloatBuffer.wrap(IdMatrix);
-            
+            modelState=0;
         }
         
         public static void rotateCam(float i,float u , float p){
@@ -431,6 +430,10 @@ public class GLRenderer implements GLEventListener{
         
         public static void changeModel(boolean b){
             modelChangeState=b;
+        }
+        
+        public void newTransformState(){
+            modelState=tstack.stackSize();
         }
     
 }
