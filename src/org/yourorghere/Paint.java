@@ -44,6 +44,9 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
@@ -145,7 +148,13 @@ public class Paint extends JFrame {
         fileTextmtl = new JTextField();
         jLabel1 = new JLabel();
         fileTextobj = new JTextField();
-        jPanel2 = new JPanel();
+        jButton7 = new JButton();
+        resetCambtn = new JButton();
+        jLabel4 = new JLabel();
+        xyGrid = new JCheckBox();
+        xzGrid = new JCheckBox();
+        yzGrid = new JCheckBox();
+        fantasma = new Checkbox();
         jPanel3 = new JPanel();
         translateBtn = new JButton();
         translateZ = new JTextField();
@@ -164,21 +173,16 @@ public class Paint extends JFrame {
         rotateY = new JTextField();
         rotateX = new JTextField();
         jLabel5 = new JLabel();
-        jPanel7 = new JPanel();
-        cisYBtn = new JButton();
+        jLabel6 = new JLabel();
         cisX = new JTextField();
         cisY = new JTextField();
         cisZ = new JTextField();
-        jLabel6 = new JLabel();
         cisXBtn = new JButton();
+        cisYBtn = new JButton();
         cisZBtn = new JButton();
-        jButton7 = new JButton();
-        resetCambtn = new JButton();
-        jLabel4 = new JLabel();
-        xyGrid = new JCheckBox();
-        xzGrid = new JCheckBox();
-        yzGrid = new JCheckBox();
-        fantasma = new Checkbox();
+        jMenuBar1 = new JMenuBar();
+        jMenu1 = new JMenu();
+        loadOBJItem = new JMenuItem();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -262,278 +266,6 @@ public class Paint extends JFrame {
                 .addContainerGap())
         );
 
-        translateBtn.setText("adicionar");
-        translateBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                translateBtnActionPerformed(evt);
-            }
-        });
-
-        translateZ.setText("z");
-
-        translateY.setText("y");
-        translateY.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                translateYActionPerformed(evt);
-            }
-        });
-
-        translateX.setText("x");
-        translateX.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                translateXActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setText("Transladar");
-
-        GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING, false)
-                    .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(translateBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(translateX, Alignment.LEADING)
-                    .addComponent(translateY, Alignment.LEADING)
-                    .addComponent(translateZ, Alignment.LEADING))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(translateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addComponent(translateY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addComponent(translateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(translateBtn)
-                .addGap(24, 24, 24))
-        );
-
-        scaleBtn.setText("adicionar");
-        scaleBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                scaleBtnActionPerformed(evt);
-            }
-        });
-
-        scaleZ.setText("z");
-
-        scaleY.setText("y");
-        scaleY.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                scaleYActionPerformed(evt);
-            }
-        });
-
-        scaleX.setText("x");
-        scaleX.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                scaleXActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Escala");
-
-        rotateBtn.setText("adicionar");
-        rotateBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                rotateBtnActionPerformed(evt);
-            }
-        });
-
-        rotateZ.setText("z");
-
-        rotateY.setText("y");
-        rotateY.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                rotateYActionPerformed(evt);
-            }
-        });
-
-        rotateX.setText("x");
-        rotateX.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                rotateXActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Rotação");
-
-        cisYBtn.setText("CisalharY");
-        cisYBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                cisYBtnActionPerformed(evt);
-            }
-        });
-
-        cisX.setText("x");
-        cisX.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                cisXActionPerformed(evt);
-            }
-        });
-
-        cisY.setText("y");
-        cisY.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                cisYActionPerformed(evt);
-            }
-        });
-
-        cisZ.setText("z");
-
-        jLabel6.setText("Cisalhar");
-
-        cisXBtn.setText("CisalharX");
-        cisXBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                cisXBtnActionPerformed(evt);
-            }
-        });
-
-        cisZBtn.setText("CisalharZ");
-        cisZBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                cisZBtnActionPerformed(evt);
-            }
-        });
-
-        GroupLayout jPanel7Layout = new GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
-                    .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(cisXBtn))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
-                            .addComponent(cisX, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cisZ, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(cisY, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cisYBtn))
-                    .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(cisZBtn))))
-        );
-        jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(Alignment.BASELINE)
-                    .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cisXBtn))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(cisX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(Alignment.BASELINE)
-                    .addComponent(cisY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cisYBtn))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(cisZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(cisZBtn)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-
-        GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(Alignment.TRAILING, false)
-                    .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rotateBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rotateX, Alignment.LEADING)
-                    .addComponent(rotateY, Alignment.LEADING)
-                    .addComponent(rotateZ, Alignment.LEADING))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
-                    .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(rotateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(rotateY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(rotateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rotateBtn)
-                        .addGap(30, 30, 30))
-                    .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jPanel7, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
-
-        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(Alignment.TRAILING, false)
-                    .addComponent(scaleBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scaleX, Alignment.LEADING)
-                    .addComponent(scaleY, Alignment.LEADING)
-                    .addComponent(scaleZ, Alignment.LEADING)
-                    .addComponent(jLabel3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(scaleX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(scaleY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addComponent(scaleZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(scaleBtn)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-            .addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-                    .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
         jButton7.setText("Limpar");
         jButton7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -585,6 +317,258 @@ public class Paint extends JFrame {
             }
         });
 
+        translateBtn.setText("adicionar");
+        translateBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                translateBtnActionPerformed(evt);
+            }
+        });
+
+        translateZ.setText("z");
+
+        translateY.setText("y");
+        translateY.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                translateYActionPerformed(evt);
+            }
+        });
+
+        translateX.setText("x");
+        translateX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                translateXActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Transladar");
+
+        scaleBtn.setText("adicionar");
+        scaleBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                scaleBtnActionPerformed(evt);
+            }
+        });
+
+        scaleZ.setText("z");
+
+        scaleY.setText("y");
+        scaleY.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                scaleYActionPerformed(evt);
+            }
+        });
+
+        scaleX.setText("x");
+        scaleX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                scaleXActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setText("Escala");
+
+        rotateBtn.setText("adicionar");
+        rotateBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                rotateBtnActionPerformed(evt);
+            }
+        });
+
+        rotateZ.setText("z");
+
+        rotateY.setText("y");
+        rotateY.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                rotateYActionPerformed(evt);
+            }
+        });
+
+        rotateX.setText("x");
+        rotateX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                rotateXActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("RotaÃ§Ã£o");
+
+        jLabel6.setText("Cisalhar");
+
+        cisX.setText("x");
+        cisX.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisXActionPerformed(evt);
+            }
+        });
+
+        cisY.setText("y");
+        cisY.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisYActionPerformed(evt);
+            }
+        });
+
+        cisZ.setText("z");
+
+        cisXBtn.setText("CisalharX");
+        cisXBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisXBtnActionPerformed(evt);
+            }
+        });
+
+        cisYBtn.setText("CisalharY");
+        cisYBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisYBtnActionPerformed(evt);
+            }
+        });
+
+        cisZBtn.setText("CisalharZ");
+        cisZBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cisZBtnActionPerformed(evt);
+            }
+        });
+
+        GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(rotateBtn, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(Alignment.TRAILING, false)
+                            .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                            .addComponent(rotateX, Alignment.LEADING)
+                            .addComponent(rotateY, Alignment.LEADING)
+                            .addComponent(rotateZ, Alignment.LEADING))
+                        .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel6Layout.createParallelGroup(Alignment.TRAILING, false)
+                                    .addComponent(cisY, Alignment.LEADING)
+                                    .addComponent(cisZ, Alignment.LEADING)
+                                    .addComponent(cisX, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+                                    .addComponent(cisXBtn)
+                                    .addComponent(cisYBtn)
+                                    .addComponent(cisZBtn))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+        );
+        jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(rotateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisXBtn))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(rotateY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisYBtn))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel6Layout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(rotateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisZ, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cisZBtn))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(rotateBtn)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(Alignment.TRAILING, false)
+                    .addComponent(scaleBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scaleX, Alignment.LEADING)
+                    .addComponent(scaleY, Alignment.LEADING)
+                    .addComponent(scaleZ, Alignment.LEADING)
+                    .addComponent(jLabel3, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(scaleX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(scaleY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(scaleZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addComponent(scaleBtn)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel6, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING, false)
+                    .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(translateBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(translateX, Alignment.LEADING)
+                    .addComponent(translateY, Alignment.LEADING)
+                    .addComponent(translateZ, Alignment.LEADING))
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(translateX, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(translateY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(translateZ, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(translateBtn))
+                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jMenu1.setText("File");
+
+        loadOBJItem.setText("Load OBJ File");
+        loadOBJItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                loadOBJItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(loadOBJItem);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -593,50 +577,62 @@ public class Paint extends JFrame {
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                            .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7)
-                            .addComponent(jLabel4)
-                            .addComponent(xyGrid)
-                            .addComponent(xzGrid)
-                            .addComponent(yzGrid)
-                            .addComponent(fantasma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                    .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton7)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(fantasma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(xyGrid)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(xzGrid)
+                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                        .addComponent(yzGrid))
+                                    .addComponent(jLabel4)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(Alignment.LEADING)
                             .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(resetCambtn))
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Listagem, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jButton7)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(jButton7)
+                            .addComponent(fantasma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(Alignment.BASELINE)
+                                    .addComponent(xyGrid)
+                                    .addComponent(xzGrid)
+                                    .addComponent(yzGrid))
+                                .addGap(39, 39, 39))
+                            .addComponent(canvas, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(xyGrid)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(xzGrid)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(yzGrid)))
-                .addPreferredGap(ComponentPlacement.RELATED)
-                .addComponent(fantasma, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(Alignment.LEADING)
-                    .addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(resetCambtn)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(resetCambtn)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -650,10 +646,6 @@ public class Paint extends JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_ListagemActionPerformed
-
-    private void fileTextmtlActionPerformed(ActionEvent evt) {//GEN-FIRST:event_fileTextmtlActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fileTextmtlActionPerformed
 
     private void translateYActionPerformed(ActionEvent evt) {//GEN-FIRST:event_translateYActionPerformed
         // TODO add your handling code here:
@@ -748,20 +740,6 @@ public class Paint extends JFrame {
         //Renderer.rotateCam(1, 1, 1);
         
     }//GEN-LAST:event_canvasMouseDragged
-
-    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            GLRenderer.changeModel(true);
-            renderer.loadNewModel(canvas.getGL(),fileTextobj.getText().toString(), fileTextmtl.getText().toString());
-            System.out.println(fileTextmtl.getText());
-            System.out.println(fileTextobj.getText());
-            GLRenderer.changeModel(false);
-
-        } catch (GLException ex) {
-            Logger.getLogger(Paint.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void rotateBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_rotateBtnActionPerformed
         // TODO add your handling code here:
@@ -906,6 +884,30 @@ public class Paint extends JFrame {
         }
     }//GEN-LAST:event_fantasmaItemStateChanged
 
+    private void loadOBJItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_loadOBJItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadOBJItemActionPerformed
+
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            GLRenderer.changeModel(true);
+            if(renderer.loadNewModel(canvas.getGL(),fileTextobj.getText().toString(), fileTextmtl.getText().toString())){
+            
+                System.out.println(fileTextmtl.getText());
+                System.out.println(fileTextobj.getText());
+            }
+          //  GLRenderer.changeModel(false);
+
+        } catch (GLException ex) {
+            Logger.getLogger(Paint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void fileTextmtlActionPerformed(ActionEvent evt) {//GEN-FIRST:event_fileTextmtlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fileTextmtlActionPerformed
+
     
     
     
@@ -969,14 +971,15 @@ public class Paint extends JFrame {
     private JLabel jLabel4;
     private JLabel jLabel5;
     private JLabel jLabel6;
+    private JMenu jMenu1;
+    private JMenuBar jMenuBar1;
     private JPanel jPanel1;
-    private JPanel jPanel2;
     private JPanel jPanel3;
     private JPanel jPanel4;
     private JPanel jPanel6;
-    private JPanel jPanel7;
     private JToggleButton jToggleButton1;
     private List list1;
+    private JMenuItem loadOBJItem;
     private JButton resetCambtn;
     private JButton rotateBtn;
     private JTextField rotateX;

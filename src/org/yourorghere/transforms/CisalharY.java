@@ -17,10 +17,10 @@ public class CisalharY extends Cisalhamento {
         this.sz=sz;
     }
     
-    @Override
+
     public float[][] doTransform() {
-        matrix[0][1]=sx;
-        matrix[2][1]=sz;
+        super.matrix[0][1]=sx;
+        super.matrix[2][1]=sz;
         
         return matrix;
     }

@@ -133,14 +133,17 @@ public class GLRenderer implements GLEventListener{
     
         if(!modelChangeState){
 
+            
             gl.glPushMatrix();
+            gl.glDisable(GL.GL_BLEND);
             gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
             gl.glLoadMatrixf(f);
             applyTransforms(gl,modelState);
-            model.opengldraw(gl);
+            //model.opengldraw(gl);
+            drawLastModel(gl);
             gl.glPopMatrix();
      
-            phantom.opengldraw(gl);
+            //phantom.opengldraw(gl);
 
 
             gl.glPushMatrix();  
@@ -148,9 +151,10 @@ public class GLRenderer implements GLEventListener{
                 applyTransforms(gl,tstack.stackSize());
                 gl.glEnable(GL.GL_BLEND);
                 gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                model.opengldraw(gl);
-                gl.glPopMatrix();
+               // model.opengldraw(gl);
+                drawLastModel(gl);
             }
+            gl.glPopMatrix();
           
             
             
@@ -173,6 +177,10 @@ public class GLRenderer implements GLEventListener{
     
       public static void desativarFantasma(){
         fantasma = false;
+    }
+      
+    public void drawLastModel(GL gl){
+        models.get(models.size()-1).opengldraw(gl);
     }
     
     public void applyTransforms(GL gl, int i){
@@ -259,7 +267,7 @@ public class GLRenderer implements GLEventListener{
     public boolean loadModels(GL gl) throws GLException, IOException {
             model = ModelLoaderOBJ.LoadModel("./models/CubeGlass.obj","./models/CubeGlass.mtl", gl);
             phantom = ModelLoaderOBJ.LoadModel("./models/Cilindro.obj","./models/Cilindro.mtl", gl);
-
+            models.add(model);
 		if (model == null||phantom==null) {
 			return false;
 		}
@@ -414,9 +422,10 @@ public class GLRenderer implements GLEventListener{
 
         public boolean loadNewModel(GL gl,String s,String m){
                 try {
-                    
-                    model= ModelLoaderOBJ.LoadModel(s,
-				m, gl);
+                    GLModel modelo;
+                    modelo= ModelLoaderOBJ.LoadModel(s,m, gl);
+                                  //  modelo = ModelLoaderOBJ.LoadModel("./models/peixe.obj","./models/peixe.mtl", gl);
+                    models.add(modelo);
                     if (model == null) {
                             return false;
                     }
