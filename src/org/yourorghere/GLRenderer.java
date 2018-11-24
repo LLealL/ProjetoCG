@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import org.yourorghere.transforms.TransformStack;
 
 public class GLRenderer implements GLEventListener{
     
-    private static boolean modelChangeState=false;
+    private static boolean modelLoading=true;
     private float[] transformedMatrix={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1}; 
     private static float[] IdMatrix={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
     private Texture tex=null;
@@ -44,6 +45,10 @@ public class GLRenderer implements GLEventListener{
     private int modelState=0;
     private BancoFiguras figuras;
     private ArrayList<GLModel> models=null;
+    private boolean modelLoaded=false;
+    
+    private static String absObjPath;
+    private static String absMtlPath;
     
     private static boolean fantasma = false;
     private static boolean transformActivated=false;
@@ -131,34 +136,40 @@ public class GLRenderer implements GLEventListener{
 
         gl.glEnable(GL.GL_LIGHTING);
     
-        if(!modelChangeState){
+        if(!modelLoading){
 
-            
-            gl.glPushMatrix();
-            gl.glDisable(GL.GL_BLEND);
-            gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
-            gl.glLoadMatrixf(f);
-            applyTransforms(gl,modelState);
-            //model.opengldraw(gl);
-            drawLastModel(gl);
-            gl.glPopMatrix();
-     
-            //phantom.opengldraw(gl);
+            if(modelLoaded){
+                gl.glPushMatrix();
+                gl.glDisable(GL.GL_BLEND);
+                gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
+                gl.glLoadMatrixf(f);
+                applyTransforms(gl,modelState);
+                model.opengldraw(gl);
+               // drawLastModel(gl);
+                gl.glPopMatrix();
+
+                //phantom.opengldraw(gl);
 
 
-            gl.glPushMatrix();  
-            if(fantasma){
-                applyTransforms(gl,tstack.stackSize());
-                gl.glEnable(GL.GL_BLEND);
-                gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-               // model.opengldraw(gl);
-                drawLastModel(gl);
+                gl.glPushMatrix();  
+                if(fantasma){
+                    applyTransforms(gl,tstack.stackSize());
+                    gl.glEnable(GL.GL_BLEND);
+                    gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    model.opengldraw(gl);
+                  //  drawLastModel(gl);
+                }
+                gl.glPopMatrix();
+
+
             }
-            gl.glPopMatrix();
-          
-            
-            
 
+        }else{
+            modelLoaded=false;
+            if(ChangeModel(gl)){
+                modelLoaded=true;
+            }
+            modelLoading=false;
         }
         transformActivated=false;
         gl.glFlush ();	   
@@ -266,9 +277,9 @@ public class GLRenderer implements GLEventListener{
 
     public boolean loadModels(GL gl) throws GLException, IOException {
             model = ModelLoaderOBJ.LoadModel("./models/CubeGlass.obj","./models/CubeGlass.mtl", gl);
-            phantom = ModelLoaderOBJ.LoadModel("./models/Cilindro.obj","./models/Cilindro.mtl", gl);
-            models.add(model);
-		if (model == null||phantom==null) {
+           // phantom = ModelLoaderOBJ.LoadModel("./models/Cilindro.obj","./models/Cilindro.mtl", gl);
+           // models.add(model);
+		if (model == null) {
 			return false;
 		}
 		return true;
@@ -437,12 +448,37 @@ public class GLRenderer implements GLEventListener{
                 return false;
         }
         
-        public static void changeModel(boolean b){
-            modelChangeState=b;
+        public static void changeModel(File objFile){
+            absObjPath =objFile.getAbsolutePath();
+            absMtlPath = FindMtl(objFile.getAbsolutePath());
+            modelLoading=true;
         }
         
         public void newTransformState(){
             modelState=tstack.stackSize();
         }
     
+        public boolean ChangeModel(GL gl){
+          try {
+                    GLModel modelo;
+                    model= ModelLoaderOBJ.LoadModel(absObjPath,absMtlPath, gl);
+                                  //  modelo = ModelLoaderOBJ.LoadModel("./models/peixe.obj","./models/peixe.mtl", gl);
+                   //models.add(modelo);
+                    if (model == null) {
+                            return false;
+                    }
+                    System.out.println(model.numpolygons());
+                    return true; 
+                } catch (GLException ex) {
+                    Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return false;   
+        }
+        
+        public static String FindMtl(String absoluteOBJPath){
+           return absoluteOBJPath.replace("obj", "mtl");
+            
+        }
+        
+        
 }
