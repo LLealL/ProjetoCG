@@ -5,6 +5,7 @@
  */
 package org.yourorghere.figuras;
 
+import java.io.Serializable;
 import org.yourorghere.figuras.Util.RGB;
 import javax.media.opengl.GL;
 
@@ -12,15 +13,15 @@ import javax.media.opengl.GL;
  *
  * @author keyalisth
  */
-public abstract class Figura implements Comparable<Figura>{
+public abstract class Figura implements Comparable<Figura>, Serializable{
     private final Integer id;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     protected float escalaX;
     protected float escalaY;
     private RGB cor;
     
-    protected Figura(Integer id,int x,int y,RGB cor){
+    protected Figura(Integer id,float x,float y,RGB cor){
         this.id=id;
         this.x = x;
         this.y= y;
@@ -37,21 +38,30 @@ public abstract class Figura implements Comparable<Figura>{
         escalaX=sx;
         escalaY=sy;
     }
-    public void transform(int tx , int ty){
-        this.x=this.x+tx;
-        this.y=this.y+ty;
+    
+    public void realizarEscalaX(float sx){
+        escalaX=sx;
+    }
+    
+        public void realizarEscalaY(float sy){
+        escalaY=sy;
+    }
+    
+    public void transform(float tx , float ty){
+        this.x=tx;
+        this.y=ty;
     }
     
     protected RGB getCor(){
         return this.cor;
     }
     
-    protected int getX(){
+    protected float getX(){
         return x;
     }
     
-    protected int getY(){
-        return y;
+    protected float getY(){
+       return y;
     }
     public Integer getID(){
         return id;

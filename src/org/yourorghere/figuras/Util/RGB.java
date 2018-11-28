@@ -5,11 +5,13 @@
  */
 package org.yourorghere.figuras.Util;
 
+import java.io.Serializable;
+
 /**
  *
  * @author keyalisth
  */
-public class RGB {
+public class RGB implements Serializable{
     private float red;
     private float green;
     private float blue;
