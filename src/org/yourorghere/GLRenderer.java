@@ -46,6 +46,8 @@ public class GLRenderer implements GLEventListener{
     private BancoFiguras figuras;
     private ArrayList<GLModel> models=null;
     private boolean modelLoaded=false;
+    private float k=1.0f/180.0f;
+    private int fantasmaState=0;
     
     private static String absObjPath;
     private static String absMtlPath;
@@ -143,7 +145,7 @@ public class GLRenderer implements GLEventListener{
                 gl.glDisable(GL.GL_BLEND);
                 gl.glGetFloatv(GL.GL_MODELVIEW_MATRIX, f);
                 gl.glLoadMatrixf(f);
-                applyTransforms(gl,modelState);
+                applyTransforms(gl,modelState-1,1.0f);
                 model.opengldraw(gl);
                // drawLastModel(gl);
                 gl.glPopMatrix();
@@ -153,15 +155,23 @@ public class GLRenderer implements GLEventListener{
 
                 gl.glPushMatrix();  
                 if(fantasma){
-                    applyTransforms(gl,tstack.stackSize());
+                    applyTransforms(gl,fantasmaState,k);
                     gl.glEnable(GL.GL_BLEND);
                     gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                     model.opengldraw(gl);
                   //  drawLastModel(gl);
+                    k+=1.0f/180.0f;
                 }
                 gl.glPopMatrix();
 
-
+                if(k>=1){
+                    k=1.0f/180.0f;
+                    fantasmaState++;
+                    if(fantasmaState>tstack.stackSize()){
+                        fantasmaState=modelState+1;
+                    }
+                }
+                System.out.println(fantasmaState);
             }
 
         }else{
@@ -194,7 +204,7 @@ public class GLRenderer implements GLEventListener{
         models.get(models.size()-1).opengldraw(gl);
     }
     
-    public void applyTransforms(GL gl, int i){
+    public void applyTransforms(GL gl, int i,float k){
         float[] transform=new float[16];     
         float[][] m={
             {1f,0f,0f,0f},
@@ -202,7 +212,10 @@ public class GLRenderer implements GLEventListener{
             {0f,0f,1f,0f},
             {0f,0f,0f,1f}
         };
-            m = tstack.makeTransformMatrix(gl,i);  
+    
+        
+        
+        m = tstack.makeTransformMatrix(gl,i,k);  
 
       //  System.out.println(m[0][3]);
         
@@ -211,31 +224,31 @@ public class GLRenderer implements GLEventListener{
         
         
         
-        transform[0]=m[0][0];
-        transform[1]=m[0][1];
-        transform[2]=m[0][2];
-        transform[3]=m[0][3];
+        transform[0]=m[0][0]*k;
+        transform[1]=m[0][1]*k;
+        transform[2]=m[0][2]*k;
+        transform[3]=m[0][3]*k;
 
-        transform[4]=m[1][0];
-        transform[5]=m[1][1];
-        transform[6]=m[1][2];
-        transform[7]=m[1][3];
+        transform[4]=m[1][0]*k;
+        transform[5]=m[1][1]*k;
+        transform[6]=m[1][2]*k;
+        transform[7]=m[1][3]*k;
 
-        transform[8]=m[2][0];
-        transform[9]=m[2][1];
-        transform[10]=m[2][2];
-        transform[11]=m[2][3];
+        transform[8]=m[2][0]*k;
+        transform[9]=m[2][1]*k;
+        transform[10]=m[2][2]*k;
+        transform[11]=m[2][3]*k;
 
-        transform[12]=m[3][0];
-        transform[13]=m[3][1];
-        transform[14]=m[3][2];
-        transform[15]=m[3][3];        
+        transform[12]=m[3][0]*k;
+        transform[13]=m[3][1]*k;
+        transform[14]=m[3][2]*k;
+        transform[15]=m[3][3]*k;        
 
         
      //  System.out.println(transform[11]);
       //  FloatBuffer fbuffer = FloatBuffer.wrap(transform);
         
-        
+ 
         gl.glMultMatrixf(transform, 0);
         
        // gl.glPushMatrix();
@@ -455,7 +468,7 @@ public class GLRenderer implements GLEventListener{
         }
         
         public void newTransformState(){
-            modelState=tstack.stackSize();
+            modelState=tstack.stackSize()+1;
         }
     
         public boolean ChangeModel(GL gl){

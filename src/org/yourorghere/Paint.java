@@ -712,15 +712,15 @@ public class Paint extends JFrame {
             float x= Float.parseFloat(rotateX.getText());
             float y= Float.parseFloat(rotateY.getText());
             float z= Float.parseFloat(rotateZ.getText());
-            if(x>0){
+            if(x!=0){
                 t.addTransform(new RotateX(x));
                 Listagem.add("Rotate(X,"+x+")");
             }
-            if(y>0){
+            if(y!=0){
                 t.addTransform(new RotateY(y));
                 Listagem.add("Rotate(Y,"+y+")");
             }
-            if(z>0){
+            if(z!=0){
                 t.addTransform(new RotateZ(z));
                 Listagem.add("Rotate(Z,"+z+")");
             }            
@@ -843,6 +843,7 @@ public class Paint extends JFrame {
     private void fantasmaItemStateChanged(ItemEvent evt) {//GEN-FIRST:event_fantasmaItemStateChanged
         if(evt.getStateChange()==ItemEvent.SELECTED){
             GLRenderer.criarFantasma();
+
         }else{
             GLRenderer.desativarFantasma();
         }
