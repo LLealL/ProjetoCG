@@ -11,11 +11,22 @@ import javax.media.opengl.GL;
  *
  * @author lucas
  */
-public class Rotacao extends Transform {
-
-    @Override
-    public void doTransform(GL gl) {
-        gl.glRotatef(x, x, y, z);
+public abstract class Rotacao extends Transform {
+    float angle=0f;
+    
+    protected Rotacao(float a){
+        angle=a;
     }
     
+    protected float getAngle(){
+        return angle;
+    }
+    
+    protected void setAngle(float a){
+        angle=a;
+    }
+    
+
+    
+    public abstract float[][] doTransform();
 }
